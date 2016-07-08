@@ -1,0 +1,28 @@
+{ "name"            : "vault-store"
+, "description"     : "An encrypted filing system"
+, "homepage"        : "https://github.com/jcoglan/vault-store"
+, "author"          : "James Coglan <jcoglan@gmail.com> (http://jcoglan.com/)"
+, "keywords"        : ["security", "encryption", "storage", "filesystem"]
+, "license"         : "GPL-3.0"
+
+, "version"         : "1.0.0"
+, "engines"         : { "node": ">= 0.10.0" }
+, "main"            : "./lib/index"
+
+, "dependencies"    : { "asap": "*"
+                      , "mkdirp": "*"
+                      , "vault-cipher": "~0.4.0"
+                      }
+
+, "devDependencies" : { "jstest": "*"
+                      , "rimraf": "*"
+                      }
+
+, "scripts"         : { "test": "jstest spec/*_spec.js" }
+
+, "repository"      : { "type"  : "git"
+                      , "url"   : "git://github.com/jcoglan/vault-store.git"
+                      }
+
+, "bugs"            : "https://github.com/jcoglan/vault-store/issues"
+}
