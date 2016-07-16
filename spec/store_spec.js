@@ -90,7 +90,7 @@ JS.Test.describe("store", function() { with(this) {
     })
   }})
 
-  it("deletes a diretory entry", function(resume) { with(this) {
+  it("deletes a directory entry", function(resume) { with(this) {
     store.put("/foo", {hello: "world"}).then(function() {
       return store.remove("/foo")
     }).then(function() {
