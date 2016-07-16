@@ -1,7 +1,8 @@
-var path   = require("path"),
-    rm_rf  = require("rimraf"),
-    vstore = require(".."),
-    JS     = require("jstest")
+var path    = require("path"),
+    rm_rf   = require("rimraf"),
+    vstore  = require(".."),
+    Promise = require("../lib/util/promise"),
+    JS      = require("jstest")
 
 var storepath = path.resolve(__dirname, "_tmp")
 
@@ -28,6 +29,20 @@ JS.Test.describe("store", function() { with(this) {
       return store.get("/foo")
     }).then(function(result) {
       resume(function() { assertEqual({hello: "world"}, result) })
+    })
+  }})
+
+  it("concurrently writes to a bucket without losing updates", function(resume) { with(this) {
+    assertRespondTo(store, "_getBucketName")
+    stub(store, "_getBucketName").returns("0")
+
+    Promise.all([
+      store.put("/foo", {a: 1}),
+      store.put("/bar", {b: 2})
+    ]).then(function() {
+      return Promise.all(["/foo", "/bar"].map(store.get, store))
+    }).then(function(results) {
+      resume(function() { assertEqual([{a: 1}, {b: 2}], results) })
     })
   }})
 }})
