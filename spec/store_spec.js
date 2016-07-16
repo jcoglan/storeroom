@@ -45,4 +45,26 @@ JS.Test.describe("store", function() { with(this) {
       resume(function() { assertEqual([{a: 1}, {b: 2}], results) })
     })
   }})
+
+  it("stores a document as a child of its parent directory", function(resume) { with(this) {
+    Promise.all([
+      store.put("/foo", {a: 1}),
+      store.put("/bar/qux", {b: 2})
+    ]).then(function() {
+      return Promise.all(["/", "/bar/"].map(store.entries, store))
+    }).then(function(results) {
+      resume(function() { assertEqual([["bar/", "foo"], ["qux"]], results) })
+    })
+  }})
+
+  it("does not store directory files more than once", function(resume) { with(this) {
+    Promise.all([
+      store.put("/bar/foo", {a: 1}),
+      store.put("/bar/qux", {b: 2})
+    ]).then(function() {
+      return store.entries("/")
+    }).then(function(entries) {
+      resume(function() { assertEqual(["bar/"], entries) })
+    })
+  }})
 }})
