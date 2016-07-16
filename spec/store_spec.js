@@ -68,6 +68,18 @@ JS.Test.describe("store", function() { with(this) {
     })
   }})
 
+  it("stores entries for nested directories", function(resume) { with(this) {
+    store.put("/a/nested/directory/foo", {a: 1}).then(function() {
+      return Promise.all(
+        ["/", "/a/", "/a/nested/", "/a/nested/directory/"].map(store.entries, store)
+      )
+    }).then(function(results) {
+      resume(function() {
+        assertEqual([["a/"], ["nested/"], ["directory/"], ["foo"]], results)
+      })
+    })
+  }})
+
   it("deletes a document", function(resume) { with(this) {
     store.put("/foo", {hello: "world"}).then(function() {
       return store.remove("/foo")
@@ -75,6 +87,43 @@ JS.Test.describe("store", function() { with(this) {
       return store.get("/foo")
     }).then(function(result) {
       resume(function() { assertEqual(undefined, result) })
+    })
+  }})
+
+  it("deletes a diretory entry", function(resume) { with(this) {
+    store.put("/foo", {hello: "world"}).then(function() {
+      return store.remove("/foo")
+    }).then(function() {
+      return store.entries("/")
+    }).then(function(result) {
+      resume(function() { assertEqual([], result) })
+    })
+  }})
+
+  it("deletes empty ancestor directories", function(resume) { with(this) {
+    store.put("/a/nested/directory/foo", {a: 1}).then(function() {
+      return store.remove("/a/nested/directory/foo")
+    }).then(function() {
+      return Promise.all(
+        ["/", "/a/", "/a/nested/", "/a/nested/directory/"].map(store.entries, store)
+      )
+    }).then(function(results) {
+      resume(function() { assertEqual([[], [], [], []], results) })
+    })
+  }})
+
+  it("does not delete non-empty ancestor directories", function(resume) { with(this) {
+    Promise.all([
+      store.put("/a/nested/directory/foo", {a: 1}),
+      store.put("/a/bar", {b: 2})
+    ]).then(function() {
+      return store.remove("/a/nested/directory/foo")
+    }).then(function() {
+      return Promise.all(
+        ["/", "/a/", "/a/nested/", "/a/nested/directory/"].map(store.entries, store)
+      )
+    }).then(function(results) {
+      resume(function() { assertEqual([["a/"], ["bar"], [], []], results) })
     })
   }})
 }})
