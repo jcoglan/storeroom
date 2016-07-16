@@ -67,4 +67,14 @@ JS.Test.describe("store", function() { with(this) {
       resume(function() { assertEqual(["bar/"], entries) })
     })
   }})
+
+  it("deletes a document", function(resume) { with(this) {
+    store.put("/foo", {hello: "world"}).then(function() {
+      return store.remove("/foo")
+    }).then(function() {
+      return store.get("/foo")
+    }).then(function(result) {
+      resume(function() { assertEqual(undefined, result) })
+    })
+  }})
 }})
