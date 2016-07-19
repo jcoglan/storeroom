@@ -11,6 +11,7 @@
 
 , "dependencies"    : { "asap": "*"
                       , "mkdirp": "*"
+                      , "remotestorage-oauth": "*"
                       , "vault-cipher": "~0.4.0"
                       }
 
