@@ -1,7 +1,7 @@
 var request    = require('../../lib/util/request'),
     vstore     = require('../../'),
     Promise    = require('../../lib/util/promise'),
-    localStore = require('./local_store');
+    localStore = require('../local_store');
 
 var address = 'jcoglan@5apps.com';
 

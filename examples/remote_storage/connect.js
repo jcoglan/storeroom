@@ -1,5 +1,5 @@
 var vstore     = require('../../'),
-    localStore = require('./local_store');
+    localStore = require('../local_store');
 
 var address = 'jcoglan@5apps.com';
 

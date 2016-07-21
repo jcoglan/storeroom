@@ -1,5 +1,5 @@
 var path   = require('path'),
-    vstore = require('../../');
+    vstore = require('../');
 
 module.exports = vstore.createStore({
   adapter:  vstore.createFileAdapter(path.resolve(__dirname, '.store')),
