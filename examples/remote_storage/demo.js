@@ -25,14 +25,20 @@ localStore.get('/remote-storage/' + address).then(function(session) {
   var records = ['/users/alice', '/users/bob'];
 
   return Promise.all(writes).then(function() {
-    return Promise.all(records.map(remoteStore.get, remoteStore));
+    return remoteStore.entries('/users/');
+
+  }).then(function(entries) {
+    return Promise.all(entries.map(function(u) { return remoteStore.get('/users/' + u) }));
 
   }).then(function(results) {
     console.log(results);
     return Promise.all(records.map(remoteStore.remove, remoteStore));
 
   }).then(function() {
-    return Promise.all(records.map(remoteStore.get, remoteStore));
+    return remoteStore.entries('/users/');
+
+  }).then(function(entries) {
+    return Promise.all(entries.map(function(u) { return remoteStore.get('/users/' + u) }));
 
   }).then(console.log);
 
