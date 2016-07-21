@@ -1,0 +1,4 @@
+{
+  "main":    "./node_querystring",
+  "browser": "./browser_querystring"
+}
