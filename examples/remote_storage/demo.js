@@ -1,32 +1,39 @@
 var request    = require('../../lib/util/request'),
+    vstore     = require('../../'),
+    Promise    = require('../../lib/util/promise'),
     localStore = require('./local_store');
 
 var address = 'jcoglan@5apps.com';
 
 localStore.get('/remote-storage/' + address).then(function(session) {
-  console.log(session);
+  var auth  = session.authorization.access_token,
+      root  = session.webfinger.storageRoot,
+      scope = session.scope;
 
-  var root = session.webfinger.storageRoot,
-      item = root + '/foo/bar/hello',
-      head = {Authorization: 'Bearer ' + session.authorization.access_token},
-      sep  = Array(81).join('-');
+  console.log('curl -isH "Authorization: Bearer ' + auth + '" ' + root + '/' + scope + '/');
 
-  console.log(sep);
-  console.log('curl -isH "Authorization: ' + head.Authorization + '" ' + root + '/');
+  var remoteStore = vstore.createStore({
+    adapter:  vstore.createRemoteStorageAdapter(session),
+    password: 'I was there'
+  });
 
-  request('PUT', item, 'hello world', head).then(function(response) {
-    return request('GET', root + '/', {}, head);
+  var writes = [
+    remoteStore.put('/users/alice', {name: 'Alice Smith'}),
+    remoteStore.put('/users/bob', {name: 'Bob Jones'})
+  ];
 
-  }).then(function(response) {
-    console.log(sep);
-    console.log(JSON.parse(response.body.toString()));
-    return request('DELETE', item, {}, head);
+  var records = ['/users/alice', '/users/bob'];
+
+  return Promise.all(writes).then(function() {
+    return Promise.all(records.map(remoteStore.get, remoteStore));
+
+  }).then(function(results) {
+    console.log(results);
+    return Promise.all(records.map(remoteStore.remove, remoteStore));
 
   }).then(function() {
-    return request('GET', root + '/', {}, head);
+    return Promise.all(records.map(remoteStore.get, remoteStore));
 
-  }).then(function(response) {
-    console.log(sep);
-    console.log(JSON.parse(response.body.toString()));
-  });
-});
+  }).then(console.log);
+
+}).catch(console.error);

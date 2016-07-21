@@ -6,7 +6,7 @@ var address = 'jcoglan@5apps.com';
 var session = vstore.connectRemoteStorage({
   address: address,
   client:  'Demo',
-  scopes:  ['*:rw'],
+  scope:   'demo',
   options: {browser: 'elinks', inline: true}
 });
 
