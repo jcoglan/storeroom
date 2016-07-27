@@ -1,7 +1,7 @@
-var path   = require('path'),
-    vstore = require('../');
+var path      = require('path'),
+    storeroom = require('../');
 
-module.exports = vstore.createStore({
-  adapter:  vstore.createFileAdapter(path.resolve(__dirname, '.store')),
+module.exports = storeroom.createStore({
+  adapter:  storeroom.createFileAdapter(path.resolve(__dirname, '.store')),
   password: 'I was there'
 });

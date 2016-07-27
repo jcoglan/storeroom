@@ -1,12 +1,12 @@
-var vstore     = require('../../'),
+var storeroom  = require('../../'),
     localStore = require('../local_store');
 
 var address = 'jcoglan@5apps.com';
 
-var session = vstore.connectRemoteStorage({
+var session = storeroom.connectRemoteStorage({
   address: address,
-  client:  'vault-store Demo',
-  scope:   'demo',
+  client:  'Storeroom Demo',
+  scope:   'storeroom',
   options: {browser: 'elinks', inline: true}
 });
 

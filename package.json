@@ -1,6 +1,6 @@
-{ "name"            : "vault-store"
+{ "name"            : "storeroom"
 , "description"     : "An encrypted filing system"
-, "homepage"        : "https://github.com/jcoglan/vault-store"
+, "homepage"        : "https://github.com/jcoglan/storeroom"
 , "author"          : "James Coglan <jcoglan@gmail.com> (http://jcoglan.com/)"
 , "keywords"        : ["security", "encryption", "storage", "filesystem"]
 , "license"         : "GPL-3.0"
@@ -25,8 +25,8 @@
 , "scripts"         : { "test": "jstest spec/*_spec.js" }
 
 , "repository"      : { "type"  : "git"
-                      , "url"   : "git://github.com/jcoglan/vault-store.git"
+                      , "url"   : "git://github.com/jcoglan/storeroom.git"
                       }
 
-, "bugs"            : "https://github.com/jcoglan/vault-store/issues"
+, "bugs"            : "https://github.com/jcoglan/storeroom/issues"
 }

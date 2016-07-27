@@ -1,21 +1,21 @@
-var vstore = require('../../'),
-    $      = require('jquery');
+var storeroom = require('../../'),
+    $         = require('jquery');
 
 $('form').on('submit', function(event) {
   event.preventDefault();
 
   var address = $('#address').val();
 
-  vstore.connectRemoteStorage({
+  storeroom.connectRemoteStorage({
     address: address,
-    client:  'vault-store Demo',
-    scope:   'demo'
+    client:  'Storeroom Demo',
+    scope:   'storeroom'
 
   }).catch(function(error) {
     console.error(error);
   });
 });
 
-vstore.handleRemoteStorageCallback().then(function(session) {
+storeroom.handleRemoteStorageCallback().then(function(session) {
   console.log(session);
 });

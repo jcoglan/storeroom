@@ -1,6 +1,6 @@
-var vstore = require('../../');
+var storeroom = require('../../');
 
-var dropbox = vstore.createDropboxAdapter({
+var dropbox = storeroom.createDropboxAdapter({
   authorization: {
     // get these by running the browser OAuth flow
   }

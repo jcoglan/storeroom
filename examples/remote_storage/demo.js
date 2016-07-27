@@ -1,4 +1,4 @@
-var vstore     = require('../../'),
+var storeroom  = require('../../'),
     Promise    = require('../../lib/util/promise'),
     localStore = require('../local_store');
 
@@ -11,8 +11,8 @@ localStore.get('/remote-storage/' + address).then(function(session) {
 
   console.log('curl -isH "Authorization: Bearer ' + auth + '" ' + root + '/' + scope + '/');
 
-  var remoteStore = vstore.createStore({
-    adapter:  vstore.createRemoteStorageAdapter(session),
+  var remoteStore = storeroom.createStore({
+    adapter:  storeroom.createRemoteStorageAdapter(session),
     password: 'I was there'
   });
 

@@ -1,7 +1,7 @@
-var vstore      = require('../../'),
+var storeroom   = require('../../'),
     credentials = require('./credentials');
 
-vstore.handleDropboxCallback(credentials).then(function(session) {
+storeroom.handleDropboxCallback(credentials).then(function(session) {
   console.log(session);
 
 }, function(error) {

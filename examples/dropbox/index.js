@@ -1,4 +1,4 @@
-var vstore      = require('../../'),
+var storeroom   = require('../../'),
     credentials = require('./credentials');
 
-vstore.connectDropbox(credentials);
+storeroom.connectDropbox(credentials);

@@ -1,16 +1,16 @@
-var path    = require("path"),
-    rm_rf   = require("rimraf"),
-    vstore  = require(".."),
-    Promise = require("../lib/util/promise"),
-    JS      = require("jstest")
+var path      = require("path"),
+    rm_rf     = require("rimraf"),
+    storeroom = require(".."),
+    Promise   = require("../lib/util/promise"),
+    JS        = require("jstest")
 
 var storepath = path.resolve(__dirname, "_tmp")
 
 JS.Test.describe("store", function() { with(this) {
   before(function() {
-    this.store = vstore.createStore({
+    this.store = storeroom.createStore({
       password: "the-password",
-      adapter:  vstore.createFileAdapter(storepath)
+      adapter:  storeroom.createFileAdapter(storepath)
     })
   })
 
