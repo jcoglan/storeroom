@@ -1,3 +1,4 @@
 {
-  "main": "./node_request"
+  "main":    "./node_request",
+  "browser": "./browser_request"
 }
