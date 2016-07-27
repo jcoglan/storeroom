@@ -6,7 +6,9 @@ module.exports = {
   devtool: 'source-map',
 
   entry: {
-    remote_storage: path.join(eg, 'remote_storage', 'index')
+    dropbox:          path.join(eg, 'dropbox', 'index'),
+    dropbox_callback: path.join(eg, 'dropbox', 'callback'),
+    remote_storage:   path.join(eg, 'remote_storage', 'index')
   },
 
   output: {
