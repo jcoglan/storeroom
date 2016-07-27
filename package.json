@@ -7,7 +7,8 @@
 
 , "version"         : "1.0.0"
 , "engines"         : { "node": ">= 0.10.0" }
-, "main"            : "./lib/index"
+, "main"            : "./lib/node_index"
+, "browser"         : "./lib/browser_index"
 
 , "dependencies"    : { "asap": "*"
                       , "mkdirp": "*"
@@ -15,8 +16,10 @@
                       , "vault-cipher": "~0.4.0"
                       }
 
-, "devDependencies" : { "jstest": "*"
+, "devDependencies" : { "jquery": "*"
+                      , "jstest": "*"
                       , "rimraf": "*"
+                      , "webpack": "*"
                       }
 
 , "scripts"         : { "test": "jstest spec/*_spec.js" }

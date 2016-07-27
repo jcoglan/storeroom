@@ -1,5 +1,4 @@
-var request    = require('../../lib/util/request'),
-    vstore     = require('../../'),
+var vstore     = require('../../'),
     Promise    = require('../../lib/util/promise'),
     localStore = require('../local_store');
 

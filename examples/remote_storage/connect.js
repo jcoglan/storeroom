@@ -5,11 +5,11 @@ var address = 'jcoglan@5apps.com';
 
 var session = vstore.connectRemoteStorage({
   address: address,
-  client:  'Demo',
+  client:  'vault-store Demo',
   scope:   'demo',
   options: {browser: 'elinks', inline: true}
 });
 
-session.then(function(credentials) {
-  localStore.put('/remote-storage/' + address, credentials);
+session.then(function(session) {
+  localStore.put('/remote-storage/' + address, session);
 });
