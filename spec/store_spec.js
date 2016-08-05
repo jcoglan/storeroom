@@ -1,8 +1,9 @@
-var path      = require("path"),
-    rm_rf     = require("rimraf"),
-    storeroom = require(".."),
-    Promise   = require("../lib/util/promise"),
-    JS        = require("jstest")
+var path       = require("path"),
+    rm_rf      = require("rimraf"),
+    storeroom  = require(".."),
+    MasterKeys = require("../lib/store/master_keys"),
+    Promise    = require("../lib/util/promise"),
+    JS         = require("jstest")
 
 var storepath = path.resolve(__dirname, "_tmp")
 
@@ -33,8 +34,8 @@ JS.Test.describe("store", function() { with(this) {
   }})
 
   it("concurrently writes to a bucket without losing updates", function(resume) { with(this) {
-    assertRespondTo(store, "_getBucketName")
-    stub(store, "_getBucketName").returns("0")
+    assertRespondTo(MasterKeys.prototype, "hashPathname")
+    stub(MasterKeys.prototype, "hashPathname").returns("0")
 
     Promise.all([
       store.put("/foo", {a: 1}),
