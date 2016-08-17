@@ -8,11 +8,15 @@ var path       = require("path"),
 var storepath = path.resolve(__dirname, "_tmp")
 
 JS.Test.describe("store", function() { with(this) {
-  before(function() {
-    this.store = storeroom.createStore({
+  this.define("createStore", function() {
+    return storeroom.createStore({
       password: "the-password",
       adapter:  storeroom.createFileAdapter(storepath)
     })
+  })
+
+  before(function() {
+    this.store = this.createStore()
   })
 
   after(function(resume) {
@@ -27,6 +31,15 @@ JS.Test.describe("store", function() { with(this) {
 
   it("stores and retrieves a document", function(resume) { with(this) {
     store.put("/foo", {hello: "world"}).then(function() {
+      return store.get("/foo")
+    }).then(function(result) {
+      resume(function() { assertEqual({hello: "world"}, result) })
+    })
+  }})
+
+  it("retrieves a document when instantiated with master keys in place", function(resume) { with(this) {
+    store.put("/foo", {hello: "world"}).then(function() {
+      store = createStore()
       return store.get("/foo")
     }).then(function(result) {
       resume(function() { assertEqual({hello: "world"}, result) })
