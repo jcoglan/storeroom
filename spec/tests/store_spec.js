@@ -1,17 +1,14 @@
-var path       = require("path"),
-    rm_rf      = require("rimraf"),
-    storeroom  = require(".."),
-    MasterKeys = require("../lib/store/master_keys"),
-    Promise    = require("../lib/util/promise"),
-    JS         = require("jstest")
+var storeroom  = require("../../"),
+    MasterKeys = require("../../lib/store/master_keys"),
+    Promise    = require("../../lib/util/promise"),
+    testStore  = require("../test_store"),
+    jstest     = require("jstest").Test
 
-var storepath = path.resolve(__dirname, "_tmp")
-
-JS.Test.describe("store", function() { with(this) {
+jstest.describe("store", function() { with(this) {
   this.define("createStore", function() {
     return storeroom.createStore({
       password: "the-password",
-      adapter:  storeroom.createFileAdapter(storepath)
+      adapter:  testStore.create()
     })
   })
 
@@ -20,7 +17,7 @@ JS.Test.describe("store", function() { with(this) {
   })
 
   after(function(resume) {
-    rm_rf(storepath, resume)
+    testStore.clear(resume)
   })
 
   it("returns undefined for an unknown key", function(resume) { with(this) {

@@ -1,0 +1,4 @@
+{
+  "main":    "./node_test_store",
+  "browser": "./browser_test_store"
+}

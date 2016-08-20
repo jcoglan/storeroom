@@ -22,7 +22,7 @@
                       , "webpack": "*"
                       }
 
-, "scripts"         : { "test": "jstest spec/*_spec.js" }
+, "scripts"         : { "test": "node spec/node.js" }
 
 , "repository"      : { "type"  : "git"
                       , "url"   : "git://github.com/jcoglan/storeroom.git"
