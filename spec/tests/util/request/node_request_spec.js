@@ -2,201 +2,335 @@ var request = require("../../../../lib/util/request"),
     http    = require("http"),
     https   = require("https"),
     stream  = require("stream"),
+    util    = require("util"),
     jstest  = require("jstest").Test
 
 jstest.describe("request", function() { with(this) {
   this.define("buffer", function(string) {
     return {
       equals: function(buffer) {
-        return buffer.toString() === string
+        return buffer instanceof Buffer && buffer.toString() === string
       }
     }
   })
 
-  this.define("clientRequest", function() {
+  this.define("stubRequest", function() {
     return new stream.Writable()
   })
 
   before(function() { with(this) {
-    stub(http, "request").returns(clientRequest())
-    stub(https, "request").returns(clientRequest())
+    stub(http, "request").returns(stubRequest())
+    stub(https, "request").returns(stubRequest())
   }})
 
-  it("makes an HTTP GET request", function() { with(this) {
-    var req = clientRequest()
+  describe("requests", function() { with(this) {
+    it("makes an HTTP GET request", function() { with(this) {
+      var req = stubRequest()
 
-    expect(http, "request").given({
-      method:  "GET",
-      host:    "example.com",
-      port:    80,
-      path:    "/",
-      headers: {}
-    }).returning(req)
+      expect(http, "request").given({
+        method:  "GET",
+        host:    "example.com",
+        port:    80,
+        path:    "/",
+        headers: {}
+      }).returning(req)
 
-    expect(req, "end").exactly(1)
-    request("GET", "http://example.com/")
+      expect(req, "end").exactly(1)
+      request("GET", "http://example.com/")
+    }})
+
+    it("makes an HTTPS GET request", function() { with(this) {
+      var req = stubRequest()
+
+      expect(https, "request").given({
+        method:  "GET",
+        host:    "example.com",
+        port:    443,
+        path:    "/",
+        headers: {}
+      }).returning(req)
+
+      expect(req, "end").exactly(1)
+      request("GET", "https://example.com/")
+    }})
+
+    it("makes an HTTP GET request with a port", function() { with(this) {
+      var req = stubRequest()
+
+      expect(http, "request").given({
+        method:  "GET",
+        host:    "example.com",
+        port:    3000,
+        path:    "/",
+        headers: {}
+      }).returning(req)
+
+      expect(req, "end").exactly(1)
+      request("GET", "http://example.com:3000/")
+    }})
+
+    it("makes an HTTP GET request with parameters", function() { with(this) {
+      var req = stubRequest()
+
+      expect(http, "request").given({
+        method:  "GET",
+        host:    "example.com",
+        port:    80,
+        path:    "/search?q=I%20was%20there&n=20",
+        headers: {}
+      }).returning(req)
+
+      expect(req, "write").exactly(0)
+
+      expect(req, "end").exactly(1)
+      request("GET", "http://example.com/search", {q: "I was there", n: 20})
+    }})
+
+    it("makes an HTTP GET request with parameters and a query string", function() { with(this) {
+      var req = stubRequest()
+
+      expect(http, "request").given({
+        method:  "GET",
+        host:    "example.com",
+        port:    80,
+        path:    "/search?hello=world&q=I%20was%20there&n=20",
+        headers: {}
+      }).returning(req)
+
+      expect(req, "write").exactly(0)
+
+      expect(req, "end").exactly(1)
+      request("GET", "http://example.com/search?hello=world", {q: "I was there", n: 20})
+    }})
+
+    it("makes an HTTP DELETE request with parameters", function() { with(this) {
+      var req = stubRequest()
+
+      expect(http, "request").given({
+        method:  "DELETE",
+        host:    "example.com",
+        port:    80,
+        path:    "/search?q=I%20was%20there&n=20",
+        headers: {
+          "Content-Length": "0"
+        }
+      }).returning(req)
+
+      expect(req, "write").exactly(0)
+
+      expect(req, "end").exactly(1)
+      request("DELETE", "http://example.com/search", {q: "I was there", n: 20})
+    }})
+
+    it("makes an HTTP POST request with parameters", function() { with(this) {
+      var req = stubRequest()
+
+      expect(http, "request").given({
+        method:  "POST",
+        host:    "example.com",
+        port:    80,
+        path:    "/search",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Length": "22"
+        }
+      }).returning(req)
+
+      expect(req, "write").given(buffer("q=I%20was%20there&n=20"))
+
+      expect(req, "end").exactly(1)
+      request("POST", "http://example.com/search", {q: "I was there", n: 20})
+    }})
+
+    it("makes an HTTP PUT request with parameters", function() { with(this) {
+      var req = stubRequest()
+
+      expect(http, "request").given({
+        method:  "PUT",
+        host:    "example.com",
+        port:    80,
+        path:    "/search",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Length": "22"
+        }
+      }).returning(req)
+
+      expect(req, "write").given(buffer("q=I%20was%20there&n=20"))
+
+      expect(req, "end").exactly(1)
+      request("PUT", "http://example.com/search", {q: "I was there", n: 20})
+    }})
+
+    it("makes an HTTP PUT request with a body", function() { with(this) {
+      var req = stubRequest()
+
+      expect(http, "request").given({
+        method:  "PUT",
+        host:    "example.com",
+        port:    80,
+        path:    "/search",
+        headers: {
+          "Content-Type": "application/octet-stream",
+          "Content-Length": "11"
+        }
+      }).returning(req)
+
+      expect(req, "write").given(buffer("I was there"))
+
+      expect(req, "end").exactly(1)
+      request("PUT", "http://example.com/search", "I was there")
+    }})
+
+    it("makes an HTTP PUT request with a body and content-type", function() { with(this) {
+      var req = stubRequest()
+
+      expect(http, "request").given({
+        method:  "PUT",
+        host:    "example.com",
+        port:    80,
+        path:    "/search",
+        headers: {
+          "content-type": "text/plain",
+          "Content-Length": "11"
+        }
+      }).returning(req)
+
+      expect(req, "write").given(buffer("I was there"))
+
+      expect(req, "end").exactly(1)
+      request("PUT", "http://example.com/search", "I was there", {"content-type": "text/plain"})
+    }})
   }})
 
-  it("makes an HTTPS GET request", function() { with(this) {
-    var req = clientRequest()
+  describe("responses", function() { with(this) {
+    var Response = function(status, headers, body) {
+      stream.Readable.call(this)
 
-    expect(https, "request").given({
-      method:  "GET",
-      host:    "example.com",
-      port:    443,
-      path:    "/",
-      headers: {}
-    }).returning(req)
+      this.statusCode = status
+      this.headers    = headers
+      this._parts     = body
+    }
+    util.inherits(Response, stream.Readable)
 
-    expect(req, "end").exactly(1)
-    request("GET", "https://example.com/")
-  }})
+    Response.prototype._read = function() {
+      var part = this._parts.shift() || null
+      this.push(part)
+    }
 
-  it("makes an HTTP GET request with a port", function() { with(this) {
-    var req = clientRequest()
+    this.define("status",  200)
+    this.define("headers", {})
+    this.define("body",    [])
+    this.define("error",   null)
 
-    expect(http, "request").given({
-      method:  "GET",
-      host:    "example.com",
-      port:    3000,
-      path:    "/",
-      headers: {}
-    }).returning(req)
+    this.define("doRequest", function(url, resume) { with(this) {
+      this.res = this.err = null
 
-    expect(req, "end").exactly(1)
-    request("GET", "http://example.com:3000/")
-  }})
+      request("GET", url).then(function(response) {
+        res = response
+      }, function(error) {
+        err = error
+      }).then(function() { resume() })
+    }})
 
-  it("makes an HTTP GET request with parameters", function() { with(this) {
-    var req = clientRequest()
+    before(function(resume) { with(this) {
+      this.req = stubRequest()
+      stub(http, "request").returns(req)
 
-    expect(http, "request").given({
-      method:  "GET",
-      host:    "example.com",
-      port:    80,
-      path:    "/search?q=I%20was%20there&n=20",
-      headers: {}
-    }).returning(req)
+      doRequest("http://example.com/", resume)
 
-    expect(req, "write").exactly(0)
+      if (error)
+        req.emit("error", error)
+      else
+        req.emit("response", new Response(status, headers, body))
+    }})
 
-    expect(req, "end").exactly(1)
-    request("GET", "http://example.com/search", {q: "I was there", n: 20})
-  }})
+    it("returns the status code", function() { with(this) {
+      assertEqual( 200, res.statusCode )
+    }})
 
-  it("makes an HTTP GET request with parameters and a query string", function() { with(this) {
-    var req = clientRequest()
+    describe("with an error code", function() { with(this) {
+      this.define("status", 404)
 
-    expect(http, "request").given({
-      method:  "GET",
-      host:    "example.com",
-      port:    80,
-      path:    "/search?hello=world&q=I%20was%20there&n=20",
-      headers: {}
-    }).returning(req)
+      it("returns the status code", function() { with(this) {
+        assertEqual( 404, res.statusCode )
+      }})
+    }})
 
-    expect(req, "write").exactly(0)
+    describe("with a response body", function() { with(this) {
+      this.define("headers", {"content-type": "application/json"})
+      this.define("body",    ['{"st', 'atus', '":"ok"', '}'])
 
-    expect(req, "end").exactly(1)
-    request("GET", "http://example.com/search?hello=world", {q: "I was there", n: 20})
-  }})
+      it("returns the content-type", function() { with(this) {
+        assertEqual( "application/json", res.headers["content-type"] )
+      }})
 
-  it("makes an HTTP DELETE request with parameters", function() { with(this) {
-    var req = clientRequest()
+      it("buffers the body", function() { with(this) {
+        assertEqual( buffer('{"status":"ok"}'), res.body )
+      }})
+    }})
 
-    expect(http, "request").given({
-      method:  "DELETE",
-      host:    "example.com",
-      port:    80,
-      path:    "/search?q=I%20was%20there&n=20",
-      headers: {
-        "Content-Length": "0"
-      }
-    }).returning(req)
+    describe("with an error", function() { with(this) {
+      this.define("error", new Error("Request error"))
 
-    expect(req, "write").exactly(0)
+      it("returns the error", function() { with(this) {
+        assertNull( res )
+        assertEqual( "Request error", err.message )
+      }})
+    }})
 
-    expect(req, "end").exactly(1)
-    request("DELETE", "http://example.com/search", {q: "I was there", n: 20})
-  }})
+    describe("with an absolute redirect", function() { with(this) {
+      before(function(resume) { with(this) {
+        var redirect = stubRequest(), target = stubRequest()
 
-  it("makes an HTTP POST request with parameters", function() { with(this) {
-    var req = clientRequest()
+        stub(http, "request").given(objectIncluding({host: "example.com"})).returns(redirect)
+        stub(http, "request").given(objectIncluding({host: "google.com"})).returns(target)
 
-    expect(http, "request").given({
-      method:  "POST",
-      host:    "example.com",
-      port:    80,
-      path:    "/search",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Length": "22"
-      }
-    }).returning(req)
+        doRequest("http://example.com/", resume)
 
-    expect(req, "write").given(buffer("q=I%20was%20there&n=20"))
+        redirect.emit("response", new Response(302, {"location": "http://google.com/"}, ["You are being redirected"]))
+        target.emit("response", new Response(201, {}, ["Google.com"]))
+      }})
 
-    expect(req, "end").exactly(1)
-    request("POST", "http://example.com/search", {q: "I was there", n: 20})
-  }})
+      it("follows the redirect", function() { with(this) {
+        assertEqual( buffer("Google.com"), res.body )
+      }})
+    }})
 
-  it("makes an HTTP PUT request with parameters", function() { with(this) {
-    var req = clientRequest()
+    describe("with a host-relative redirect", function() { with(this) {
+      before(function(resume) { with(this) {
+        var redirect = stubRequest(), target = stubRequest()
 
-    expect(http, "request").given({
-      method:  "PUT",
-      host:    "example.com",
-      port:    80,
-      path:    "/search",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Length": "22"
-      }
-    }).returning(req)
+        stub(http, "request").given(objectIncluding({path: "/users/jcoglan"})).returns(redirect)
+        stub(http, "request").given(objectIncluding({path: "/about"})).returns(target)
 
-    expect(req, "write").given(buffer("q=I%20was%20there&n=20"))
+        doRequest("http://example.com/users/jcoglan", resume)
 
-    expect(req, "end").exactly(1)
-    request("PUT", "http://example.com/search", {q: "I was there", n: 20})
-  }})
+        redirect.emit("response", new Response(302, {"location": "/about"}, ["You are being redirected"]))
+        target.emit("response", new Response(201, {}, ["About"]))
+      }})
 
-  it("makes an HTTP PUT request with a body", function() { with(this) {
-    var req = clientRequest()
+      it("follows the redirect", function() { with(this) {
+        assertEqual( buffer("About"), res.body )
+      }})
+    }})
 
-    expect(http, "request").given({
-      method:  "PUT",
-      host:    "example.com",
-      port:    80,
-      path:    "/search",
-      headers: {
-        "Content-Type": "application/octet-stream",
-        "Content-Length": "11"
-      }
-    }).returning(req)
+    describe("with a path-relative redirect", function() { with(this) {
+      before(function(resume) { with(this) {
+        var redirect = stubRequest(), target = stubRequest()
 
-    expect(req, "write").given(buffer("I was there"))
+        stub(http, "request").given(objectIncluding({path: "/users/jcoglan"})).returns(redirect)
+        stub(http, "request").given(objectIncluding({path: "/users/about"})).returns(target)
 
-    expect(req, "end").exactly(1)
-    request("PUT", "http://example.com/search", "I was there")
-  }})
+        doRequest("http://example.com/users/jcoglan", resume)
 
-  it("makes an HTTP PUT request with a body and content-type", function() { with(this) {
-    var req = clientRequest()
+        redirect.emit("response", new Response(302, {"location": "about"}, ["You are being redirected"]))
+        target.emit("response", new Response(201, {}, ["About"]))
+      }})
 
-    expect(http, "request").given({
-      method:  "PUT",
-      host:    "example.com",
-      port:    80,
-      path:    "/search",
-      headers: {
-        "content-type": "text/plain",
-        "Content-Length": "11"
-      }
-    }).returning(req)
-
-    expect(req, "write").given(buffer("I was there"))
-
-    expect(req, "end").exactly(1)
-    request("PUT", "http://example.com/search", "I was there", {"content-type": "text/plain"})
+      it("follows the redirect", function() { with(this) {
+        assertEqual( buffer("About"), res.body )
+      }})
+    }})
   }})
 }})
