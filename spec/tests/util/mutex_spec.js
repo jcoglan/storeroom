@@ -3,28 +3,31 @@ var Mutex   = require("../../../lib/util/mutex"),
     jstest  = require("jstest").Test
 
 jstest.describe("Mutex", function() { with(this) {
-  describe("synchronize", function() { with(this) {
-    this.define("delay", function(n) {
-      return new Promise(function(resolve) {
-        setTimeout(resolve, n)
+  this.define("delay", function(n) {
+    return new Promise(function(resolve) {
+      setTimeout(resolve, n)
+    })
+  })
+
+  this.define("task", function(name, isError) {
+    var delay = this.delay, logs = this.logs
+
+    return function() {
+      logs.push("begin:" + name)
+      return delay(50).then(function() {
+        logs.push("end:" + name)
+        if (isError) throw new Error()
       })
-    })
+    }
+  })
 
-    this.define("task", function(name, isError) {
-      var delay = this.delay, logs = this.logs
+  before(function() { with(this) {
+    this.logs = []
+  }})
 
-      return function() {
-        logs.push("begin:" + name)
-        return delay(50).then(function() {
-          logs.push("end:" + name)
-          if (isError) throw new Error()
-        })
-      }
-    })
-
+  describe("synchronize", function() { with(this) {
     before(function() { with(this) {
       this.mutex = new Mutex()
-      this.logs  = []
     }})
 
     it("returns the result of the promise", function(resume) { with(this) {
@@ -88,6 +91,73 @@ jstest.describe("Mutex", function() { with(this) {
       delay(60).then(function() {
         mutex.synchronize(task("b"))
         resume(function() { assertEqual(["begin:a", "end:a", "begin:b"], logs) })
+      })
+    }})
+  }})
+
+  describe("multi", function() { with(this) {
+    before(function() { with(this) {
+      this.mX = new Mutex()
+      this.mY = new Mutex()
+      this.mZ = new Mutex()
+    }})
+
+    it("returns the result of the promise", function(resume) { with(this) {
+      var result = Mutex.multi([mX, mY, mZ], function() {
+        return Promise.resolve("They all work!")
+      })
+
+      result.then(function(text) {
+        resume(function() { assertEqual("They all work!", text) })
+      })
+    }})
+
+    it("locks all the mutexes", function(resume) { with(this) {
+      Promise.all([
+        Mutex.multi([mX, mY, mZ], task("all")),
+        mX.synchronize(task("X")),
+        mY.synchronize(task("Y")),
+        mZ.synchronize(task("Z"))
+
+      ]).then(function() {
+        resume(function() {
+          assertEqual( ["begin:all", "end:all",
+                        "begin:Z", "begin:Y", "begin:X",
+                        "end:Z", "end:Y", "end:X"], logs )
+        })
+      })
+    }})
+
+    it("waits if some mutexes are already busy", function(resume) { with(this) {
+      Promise.all([
+        mY.synchronize(task("Y")),
+        mZ.synchronize(task("Z")),
+        Mutex.multi([mX, mY, mZ], task("all")),
+        mX.synchronize(task("X"))
+
+      ]).then(function() {
+        resume(function() {
+          assertEqual( ["begin:Y", "begin:Z",
+                        "end:Y", "end:Z",
+                        "begin:all", "end:all",
+                        "begin:X", "end:X"], logs )
+        })
+      })
+    }})
+
+    it("allows mutexes it hasn't claimed yet to be used", function(resume) { with(this) {
+      Promise.all([
+        mX.synchronize(task("X")),
+        mY.synchronize(task("Y")),
+        Mutex.multi([mX, mY, mZ], task("all")),
+        mZ.synchronize(task("Z"))
+
+      ]).then(function() {
+        resume(function() {
+          assertEqual( ["begin:X", "begin:Y", "begin:Z",
+                        "end:X", "end:Y", "end:Z",
+                        "begin:all", "end:all"], logs )
+        })
       })
     }})
   }})
