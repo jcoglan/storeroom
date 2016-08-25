@@ -5,6 +5,8 @@ var request = require("../../../../lib/util/request"),
     util    = require("util"),
     jstest  = require("jstest").Test
 
+require("./http_response")
+
 jstest.describe("request", function() { with(this) {
   this.define("buffer", function(string) {
     return {
@@ -245,39 +247,7 @@ jstest.describe("request", function() { with(this) {
         req.emit("response", new Response(status, headers, body))
     }})
 
-    it("returns the status code", function() { with(this) {
-      assertEqual( 200, res.statusCode )
-    }})
-
-    describe("with an error code", function() { with(this) {
-      this.define("status", 404)
-
-      it("returns the status code", function() { with(this) {
-        assertEqual( 404, res.statusCode )
-      }})
-    }})
-
-    describe("with a response body", function() { with(this) {
-      this.define("headers", {"content-type": "application/json"})
-      this.define("body",    ['{"st', 'atus', '":"ok"', '}'])
-
-      it("returns the content-type", function() { with(this) {
-        assertEqual( "application/json", res.headers["content-type"] )
-      }})
-
-      it("buffers the body", function() { with(this) {
-        assertEqual( buffer('{"status":"ok"}'), res.body )
-      }})
-    }})
-
-    describe("with an error", function() { with(this) {
-      this.define("error", new Error("Request error"))
-
-      it("returns the error", function() { with(this) {
-        assertNull( res )
-        assertEqual( "Request error", err.message )
-      }})
-    }})
+    itShouldBehaveLike("HTTP response")
 
     describe("with an absolute redirect", function() { with(this) {
       before(function(resume) { with(this) {
