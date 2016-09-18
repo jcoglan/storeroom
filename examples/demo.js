@@ -23,4 +23,4 @@ Promise.all(writes).then(function() {
 }).then(function(entries) {
   return Promise.all(entries.map(function(u) { return localStore.get('/users/' + u) }));
 
-}).then(console.log);
+}).then(console.log, console.error);
