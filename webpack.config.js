@@ -7,10 +7,10 @@ module.exports = {
   devtool: 'source-map',
 
   entry: {
-    'examples/bundles/dropbox':          path.join(eg, 'dropbox', 'index'),
-    'examples/bundles/dropbox_callback': path.join(eg, 'dropbox', 'callback'),
-    'examples/bundles/remote_storage':   path.join(eg, 'remote_storage', 'index'),
-    'spec/bundles/browser':              path.join(spec, 'browser')
+    'examples/bundles/acceptor':       path.join(eg, 'acceptor'),
+    'examples/bundles/dropbox':        path.join(eg, 'dropbox', 'index'),
+    'examples/bundles/remote_storage': path.join(eg, 'remote_storage', 'index'),
+    'spec/bundles/browser':            path.join(spec, 'browser')
   },
 
   output: {
