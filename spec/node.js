@@ -7,6 +7,7 @@ require("./tests/util/parse_path_spec")
 require("./tests/util/querystring_spec")
 require("./tests/adapters/adapter_examples")
 require("./tests/adapters/file_spec")
+require("./tests/adapters/remote_storage/node_authorization_spec")
 require("./tests/adapters/remote_storage/discover_spec")
 
 require("./tests/util/request/node_request_spec")

@@ -22,7 +22,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
   })
 
   it("returns an error if nothing responds", function(resume) { with(this) {
-    discover("bob@example.com").catch(function(error) {
+    discover.withAddress("bob@example.com").catch(function(error) {
       resume(function() { assert(error) })
     })
   }})
@@ -46,7 +46,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("returns an error", function(resume) { with(this) {
-      discover("bob@example.com").catch(function(error) {
+      discover.withAddress("bob@example.com").catch(function(error) {
         resume(function() { assert(error) })
       })
     }})
@@ -71,7 +71,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("returns an error", function(resume) { with(this) {
-      discover("bob@example.com").catch(function(error) {
+      discover.withAddress("bob@example.com").catch(function(error) {
         resume(function() { assert(error) })
       })
     }})
@@ -96,7 +96,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("returns an error", function(resume) { with(this) {
-      discover("bob@example.com").catch(function(error) {
+      discover.withAddress("bob@example.com").catch(function(error) {
         resume(function() { assert(error) })
       })
     }})
@@ -121,7 +121,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("returns an error", function(resume) { with(this) {
-      discover("bob@example.com").catch(function(error) {
+      discover.withAddress("bob@example.com").catch(function(error) {
         resume(function() { assert(error) })
       })
     }})
@@ -147,7 +147,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("returns an error", function(resume) { with(this) {
-      discover("bob@example.com").catch(function(error) {
+      discover.withAddress("bob@example.com").catch(function(error) {
         resume(function() { assert(error) })
       })
     }})
@@ -172,7 +172,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("discovers the storage", function(resume) { with(this) {
-      discover("bob@example.com").then(function(response) {
+      discover.withAddress("bob@example.com").then(function(response) {
         resume(function() {
           assertEqual({
             version:     "draft-dejong-remotestorage-05",
@@ -203,7 +203,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("discovers the storage", function(resume) { with(this) {
-      discover("bob@example.com").then(function(response) {
+      discover.withAddress("bob@example.com").then(function(response) {
         resume(function() {
           assertEqual({
             version:     "draft-dejong-remotestorage-02",
@@ -234,7 +234,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("discovers the storage", function(resume) { with(this) {
-      discover("bob@example.com").then(function(response) {
+      discover.withAddress("bob@example.com").then(function(response) {
         resume(function() {
           assertEqual({
             version:     "draft-dejong-remotestorage-01",
@@ -266,7 +266,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("discovers the storage", function(resume) { with(this) {
-      discover("bob@example.com").then(function(response) {
+      discover.withAddress("bob@example.com").then(function(response) {
         resume(function() {
           assertEqual({
             version:     "draft-dejong-remotestorage-00",
@@ -298,7 +298,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("discovers the storage", function(resume) { with(this) {
-      discover("bob@example.com").then(function(response) {
+      discover.withAddress("bob@example.com").then(function(response) {
         resume(function() {
           assertEqual({
             version:     "https://www.w3.org/community/rww/wiki/read-write-web-00#simple",
@@ -338,7 +338,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     }})
 
     it("discovers the storage", function(resume) { with(this) {
-      discover("bob@example.com").then(function(response) {
+      discover.withAddress("bob@example.com").then(function(response) {
         resume(function() {
           assertEqual({
             version:     "remoteStorage-2011.10",
