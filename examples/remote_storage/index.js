@@ -7,15 +7,14 @@ $('form').on('submit', function(event) {
   var address = $('#address').val();
 
   storeroom.connectRemoteStorage({
-    address: address,
-    client:  'Storeroom Demo',
-    scope:   'storeroom'
+    address:  address,
+    client:   'Storeroom Demo',
+    scope:    'storeroom',
+    callback: 'http://localhost:8000/acceptor.html'
 
-  }).catch(function(error) {
+  }).then(function(session) {
+    console.log(session);
+  }, function(error) {
     console.error(error);
   });
-});
-
-storeroom.handleRemoteStorageCallback().then(function(session) {
-  console.log(session);
 });
