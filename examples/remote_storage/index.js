@@ -10,7 +10,7 @@ $('form').on('submit', function(event) {
     address:  address,
     client:   'Storeroom Demo',
     scope:    'storeroom',
-    callback: 'http://localhost:8000/acceptor.html'
+    callback: location.origin + '/acceptor.html'
 
   }).then(function(session) {
     console.log(session);
