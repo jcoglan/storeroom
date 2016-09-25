@@ -1,10 +1,10 @@
-var LocalStorageAdapter = require("../../../lib/adapters/local_storage"),
-    jstest              = require("jstest").Test
+var storeroom = require("../../../"),
+    jstest    = require("jstest").Test
 
 jstest.describe("LocalStorageAdapter", function() { with(this) {
   describe("localStorage", function() { with(this) {
     this.define("createAdapter", function() {
-      return new LocalStorageAdapter("prefix")
+      return storeroom.createLocalStorageAdapter("prefix")
     })
 
     this.define("clearAdapter", function(resume) {
@@ -17,7 +17,7 @@ jstest.describe("LocalStorageAdapter", function() { with(this) {
 
   describe("sessionStorage", function() { with(this) {
     this.define("createAdapter", function() {
-      return new LocalStorageAdapter("prefix", sessionStorage)
+      return storeroom.createLocalStorageAdapter("prefix", sessionStorage)
     })
 
     this.define("clearAdapter", function(resume) {
