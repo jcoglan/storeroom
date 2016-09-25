@@ -3,13 +3,15 @@ var storeroom  = require('../../'),
 
 var address = 'jcoglan@5apps.com';
 
-var session = storeroom.connectRemoteStorage({
+storeroom.connectRemoteStorage({
   address: address,
   client:  'Storeroom Demo',
   scope:   'storeroom',
   options: {browser: 'elinks', inline: true}
-});
 
-session.then(function(session) {
+}).then(function(session) {
   localStore.put('/remote-storage/' + address, session);
+
+}).then(function() {
+  setTimeout(process.exit, 1000);
 });
