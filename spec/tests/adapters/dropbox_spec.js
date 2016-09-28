@@ -34,9 +34,9 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when the request is successful", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 200,
-          headers:    {"dropbox-api-result": "{}"},
-          body:      "the file contents"
+          status:  200,
+          headers: {"dropbox-api-result": "{}"},
+          body:    "the file contents"
         }))
       }})
 
@@ -50,9 +50,9 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when the request is unauthorized", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 401,
-          headers:    {"dropbox-api-result": "{}"},
-          body:      "Bad access token"
+          status:  401,
+          headers: {"dropbox-api-result": "{}"},
+          body:    "Bad access token"
         }))
       }})
 
@@ -69,9 +69,9 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when the file is not found", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 409,
-          headers:    {"dropbox-api-result": "{}"},
-          body:      '{"error": {"path": {".tag": "not_found"}}}'
+          status:  409,
+          headers: {"dropbox-api-result": "{}"},
+          body:    '{"error": {"path": {".tag": "not_found"}}}'
         }))
       }})
 
@@ -85,9 +85,9 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when an error is returned", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 409,
-          headers:    {"dropbox-api-result": "{}"},
-          body:       '{"error": "Server error"}'
+          status:  409,
+          headers: {"dropbox-api-result": "{}"},
+          body:    '{"error": "Server error"}'
         }))
       }})
 
@@ -121,8 +121,8 @@ jstest.describe("DropboxAdapter", function() { with(this) {
         stub(http, "post").given(match(/\/upload$/), anything(), objectIncluding({
           "Dropbox-API-Arg": jsonIncluding({mode: "add"})
         })).returns(Promise.resolve({
-          statusCode: 200,
-          body:       '{"rev": "789xyz"}'
+          status: 200,
+          body:   '{"rev": "789xyz"}'
         }))
 
         adapter.write("a-file", "the file contents").then(function() { resume() })
@@ -145,9 +145,9 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function(resume) { with(this) {
         stub(http, "post").given(match(/\/download$/), anyArgs())
           .returns(Promise.resolve({
-            statusCode: 200,
-            headers:    {"dropbox-api-result": '{"rev": "123abc"}'},
-            body:       "the file contents"
+            status:  200,
+            headers: {"dropbox-api-result": '{"rev": "123abc"}'},
+            body:    "the file contents"
           }))
 
         adapter.read("a-file").then(function() { resume() })
@@ -169,8 +169,8 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when the request is successful", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 200,
-          body:       '{"rev": "789xyz"}'
+          status: 200,
+          body:   '{"rev": "789xyz"}'
         }))
       }})
 
@@ -184,8 +184,8 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when the request is unauthorized", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 401,
-          body:       "Bad access token"
+          status: 401,
+          body:   "Bad access token"
         }))
       }})
 
@@ -202,8 +202,8 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when there is a conflict", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 409,
-          body:       '{"error": {"reason": {".tag": "conflict"}}}'
+          status: 409,
+          body:   '{"error": {"reason": {".tag": "conflict"}}}'
         }))
       }})
 
@@ -220,8 +220,8 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when an error is returned", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 409,
-          body:       '{"error": "Server error"}'
+          status: 409,
+          body:   '{"error": "Server error"}'
         }))
       }})
 
@@ -251,13 +251,13 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function(resume) { with(this) {
         stub(http, "post").given(match(/\/download$/), anyArgs())
           .returns(Promise.resolve({
-            statusCode: 200,
-            headers:    {"dropbox-api-result": '{"rev": "123abc"}'},
-            body:       "the file contents"
+            status:  200,
+            headers: {"dropbox-api-result": '{"rev": "123abc"}'},
+            body:    "the file contents"
           }))
 
         stub(http, "post").given(match(/\/delete$/), anyArgs())
-          .returns(Promise.resolve({statusCode: 200, body: "{}"}))
+          .returns(Promise.resolve({status: 200, body: "{}"}))
 
         adapter.read("a-file").then(function() { resume() })
       }})
@@ -283,7 +283,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
 
     describe("when the request is unauthorized", function() { with(this) {
       before(function() { with(this) {
-        stub(http, "post").returns(Promise.resolve({statusCode: 401, body: "{}"}))
+        stub(http, "post").returns(Promise.resolve({status: 401, body: "{}"}))
       }})
 
       it("throws an AuthError", function(resume) { with(this) {
@@ -299,8 +299,8 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when the file is not found", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 409,
-          body:       '{"error": {"path_lookup": {".tag": "not_found"}}}'
+          status: 409,
+          body:   '{"error": {"path_lookup": {".tag": "not_found"}}}'
         }))
       }})
 
@@ -314,8 +314,8 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("when an error is returned", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
-          statusCode: 409,
-          body:       '{"error": "Gateway timeout"}'
+          status: 409,
+          body:   '{"error": "Gateway timeout"}'
         }))
       }})
 

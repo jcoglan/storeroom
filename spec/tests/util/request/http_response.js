@@ -8,14 +8,14 @@ jstest.describe("responses", function() { with(this) {
     this.define("error",   null)
 
     it("returns the status code", function() { with(this) {
-      assertEqual( 200, res.statusCode )
+      assertEqual( 200, res.status )
     }})
 
     describe("with an error code", function() { with(this) {
       this.define("status", 404)
 
       it("returns the status code", function() { with(this) {
-        assertEqual( 404, res.statusCode )
+        assertEqual( 404, res.status )
       }})
     }})
 

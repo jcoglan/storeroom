@@ -6,7 +6,7 @@ var discover = require("../../../../lib/adapters/remote_storage/discover"),
 
 jstest.describe("RemoteStorage discovery", function() { with(this) {
   before(function() { with(this) {
-    stub(http, "get").returns(Promise.resolve({statusCode: 404}))
+    stub(http, "get").returns(Promise.resolve({status: 404}))
   }})
 
   this.define("stubGet", function(url, params, response) {
@@ -15,9 +15,9 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
              : this.stub(http, "get").given(url)
          
     stub.returns(Promise.resolve({
-      statusCode: response[0],
-      headers:    response[1],
-      body:       new Buffer(JSON.stringify(response[2]))
+      status:  response[0],
+      headers: response[1],
+      body:    new Buffer(JSON.stringify(response[2]))
     }))
   })
 
