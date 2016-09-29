@@ -1,6 +1,6 @@
-var storeroom = require("../../../"),
-    errors    = require("../../../lib/adapters/errors"),
-    http      = require("../../../lib/util/http"),
+var storeroom = require("../../../../"),
+    errors    = require("../../../../lib/adapters/errors"),
+    http      = require("../../../../lib/util/http"),
     Promise   = storeroom.Promise,
     jstest    = require("jstest").Test
 
