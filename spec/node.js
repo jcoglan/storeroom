@@ -8,6 +8,7 @@ require("./tests/util/querystring_spec")
 require("./tests/adapters/adapter_examples")
 require("./tests/adapters/dropbox/adapter_spec")
 require("./tests/adapters/file_spec")
+require("./tests/adapters/remote_storage/adapter_spec")
 require("./tests/adapters/remote_storage/node_authorization_spec")
 require("./tests/adapters/remote_storage/discover_spec")
 

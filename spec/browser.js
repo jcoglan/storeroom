@@ -9,6 +9,7 @@ require("./tests/adapters/adapter_examples")
 require("./tests/adapters/dropbox/authorize_spec")
 require("./tests/adapters/dropbox/adapter_spec")
 require("./tests/adapters/local_storage_spec")
+require("./tests/adapters/remote_storage/adapter_spec")
 require("./tests/adapters/remote_storage/browser_authorize_spec")
 require("./tests/adapters/remote_storage/discover_spec")
 
