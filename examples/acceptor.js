@@ -1,1 +1,1 @@
-require('../acceptor');
+require('../oauth-callback');
