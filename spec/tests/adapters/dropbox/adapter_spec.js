@@ -24,7 +24,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     it("downloads a file", function(resume) { with(this) {
       expect(http, "post").given("https://content.dropboxapi.com/2/files/download", {}, {
         "Authorization":   "Bearer deadbeef",
-        "Content-Type":    "",
+        "Content-Type":    " ",
         "Dropbox-API-Arg": jsonIncluding({path: "/a-file"})
       }).returning(Promise.resolve({}))
 
