@@ -1,6 +1,6 @@
 var storeroom  = require("../../"),
     MasterKeys = require("../../lib/store/master_keys"),
-    Promise    = require("../../lib/util/promise"),
+    Promise    = storeroom.Promise,
     testStore  = require("../test_store"),
     jstest     = require("jstest").Test
 

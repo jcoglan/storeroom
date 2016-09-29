@@ -1,7 +1,7 @@
 var storeroom = require("../../../../"),
     discover  = require("../../../../lib/adapters/remote_storage/discover"),
     oauth     = require("remotestorage-oauth"),
-    Promise   = require("../../../../lib/util/promise"),
+    Promise   = storeroom.Promise,
     jstest    = require("jstest").Test
 
 jstest.describe("RemoteStorage Node authorization", function() { with(this) {
