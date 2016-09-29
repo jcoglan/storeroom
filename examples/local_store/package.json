@@ -1,0 +1,4 @@
+{
+  "main":    "./file_store",
+  "browser": "./localstorage_store"
+}
