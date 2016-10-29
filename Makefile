@@ -7,4 +7,4 @@ all:
 	webpack --config webpack.config.js --display-modules --watch
 
 clean:
-	rm -rf examples/{.store,bundles}
+	rm -rf {examples,spec}/bundles examples/.store
