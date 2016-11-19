@@ -302,7 +302,6 @@ store/.keys     {"version":1}
                 Bc43a6sfiDyaqiiN3CxTExiod6EvyhNcH5qaoARvll9KS5xHP98kptHlq3dSDtxv
                 xfDWlI4FMw2uaU/tsvTYzdkQkcIVDQIFf/UVFWC8b0r3tHIqu4tHalCA0Jjo65Y6
                 HhSd9Sg6yUzViNsMdgadlkg=
-
 ```
 
 Like all the other files that will be explained shortly, the master keys file
