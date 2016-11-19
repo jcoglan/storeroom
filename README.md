@@ -16,6 +16,11 @@ systems:
 * `localStorage`
 * RemoteStorage
 
+*CAVEAT EMPTOR*: this is early-stage software and is still in active development
+as it is integrated with downstream applications. Although the storage has been
+designed with future-proofing in mind, we may still make breaking changes. Usage
+is entirely at your own risk.
+
 
 ## Installation
 
