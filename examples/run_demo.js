@@ -22,5 +22,8 @@ module.exports = function(store) {
   }).then(function(entries) {
     return Promise.all(entries.map(function(u) { return store.get('/users/' + u) }));
 
-  }).then(console.log, console.error);
+  }).then(
+    function(m) { console.log(m) },
+    function(e) { console.error(e) }
+  )
 };

@@ -22,4 +22,6 @@ var run = function(session) {
 module.exports = run;
 
 if (require.main === module)
-  store.get('/sessions/remote_storage').then(run);
+  store.get('/sessions/remote_storage')
+      .then(run)
+      .catch(function(e) { console.error(e) });
