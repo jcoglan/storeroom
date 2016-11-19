@@ -256,7 +256,7 @@ MemoryAdapter.prototype.write = function(name, data) {
 ```
 
 
-## Storage design
+## Storage design
 
 The following section is advisory; the storage design may change in future
 releases and you should not write code that is coupled to it. This description
