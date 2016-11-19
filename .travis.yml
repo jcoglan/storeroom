@@ -8,8 +8,3 @@ node_js:
   - "5"
   - "6"
   - "7"
-
-before_script:
-  - git submodule update --init --recursive
-  - cd node_modules/remotestorage-oauth && npm install --production && cd -
-  - cd node_modules/vault-cipher && npm install --production && cd -

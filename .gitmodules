@@ -1,6 +1,0 @@
-[submodule "node_modules/remotestorage-oauth"]
-	path = node_modules/remotestorage-oauth
-	url = git://github.com/jcoglan/remotestorage-oauth.git
-[submodule "node_modules/vault-cipher"]
-	path = node_modules/vault-cipher
-	url = git://github.com/jcoglan/vault-cipher.git
