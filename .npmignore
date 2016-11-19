@@ -1,0 +1,9 @@
+.git
+.gitignore
+.npmignore
+.travis.yml
+Makefile
+examples
+node_modules
+spec
+webpack.config.js
