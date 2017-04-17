@@ -91,6 +91,19 @@ jstest.describe("store", function() { with(this) {
     })
   }})
 
+  it("finds entries for a directory recursively", function(resume) { with(this) {
+    Promise.all([
+      store.put("/foo/a", {a: 1}),
+      store.put("/foo/b", {b: 2}),
+      store.put("/foo/a/c", {c: 3}),
+      store.put("/bar/a", {a: 1})
+    ]).then(function() {
+      return store.findRecursive("/foo/")
+    }).then(function(entries) {
+      resume(function() { assertEqual(["a", "a/c", "b"], entries) })
+    })
+  }})
+
   it("deletes a document", function(resume) { with(this) {
     store.put("/foo", {hello: "world"}).then(function() {
       return store.remove("/foo")
@@ -135,6 +148,22 @@ jstest.describe("store", function() { with(this) {
       )
     }).then(function(results) {
       resume(function() { assertEqual([["a/"], ["bar"], [], []], results) })
+    })
+  }})
+
+  it("removes a directory recursively", function(resume) { with(this) {
+    Promise.all([
+      store.put("/foo/a/nested/doc", {a: 1}),
+      store.put("/foo/b", {b: 2}),
+      store.put("/bar/c", {c: 3})
+    ]).then(function() {
+      return store.removeRecursive("/foo/")
+    }).then(function() {
+      return Promise.all(
+        ["/", "/foo/", "/foo/a/", "/foo/a/nested/"].map(store.entries, store)
+      )
+    }).then(function(results) {
+      resume(function() { assertEqual([["bar/"], [], [] ,[]], results) })
     })
   }})
 }})
