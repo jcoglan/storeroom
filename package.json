@@ -19,7 +19,7 @@
 , "devDependencies" : { "jquery": "*"
                       , "jstest": "*"
                       , "rimraf": "*"
-                      , "webpack": "*"
+                      , "webpack": "^2.0.0"
                       }
 
 , "scripts"         : { "test": "node spec/node.js" }
