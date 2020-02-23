@@ -14,6 +14,7 @@ module.exports = {
   },
 
   output: {
+    path: __dirname,
     filename: '[name].js'
   },
 

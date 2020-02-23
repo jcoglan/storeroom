@@ -19,7 +19,8 @@
 , "devDependencies" : { "jquery": "*"
                       , "jstest": "*"
                       , "rimraf": "< 3.0.0"
-                      , "webpack": "^2.0.0"
+                      , "webpack": "*"
+                      , "webpack-cli": "*"
                       }
 
 , "scripts"         : { "test": "node spec/node.js" }
