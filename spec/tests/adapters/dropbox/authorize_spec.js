@@ -14,7 +14,7 @@ jstest.describe("Dropbox authorization", function() { with(this) {
 
   describe("token flow", function() { with(this) {
     before(function() { with(this) {
-      this.oauthResponse = {access_token: "bearer-token"}
+      this.oauthResponse = { access_token: "bearer-token" }
       stub(oauth, "openWindow").returns(Promise.resolve(oauthResponse))
     }})
 
@@ -40,7 +40,7 @@ jstest.describe("Dropbox authorization", function() { with(this) {
     it("returns the session credentials", function(resume) { with(this) {
       storeroom.connectDropbox(params).then(function(response) {
         resume(function() {
-          assertEqual( {authorization: {access_token: "bearer-token"}}, response )
+          assertEqual( { authorization: { access_token: "bearer-token" } }, response )
         })
       })
     }})
@@ -58,7 +58,7 @@ jstest.describe("Dropbox authorization", function() { with(this) {
     before(function() { with(this) {
       stub(http, "post").returns(Promise.resolve({}))
 
-      this.oauthResponse = {code: "the-authorization-code"}
+      this.oauthResponse = { code: "the-authorization-code" }
       stub(oauth, "openWindow").returns(Promise.resolve(oauthResponse))
 
       params.type   = "code"
@@ -99,12 +99,12 @@ jstest.describe("Dropbox authorization", function() { with(this) {
       it("returns the access token on success", function(resume) { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status: 200,
-          body:   '{"access_token": "bearer token"}'
+          body:   '{ "access_token": "bearer token" }'
         }))
 
         storeroom.connectDropbox(params).then(function(response) {
           resume(function() {
-            assertEqual({authorization: {access_token: "bearer token"}}, response)
+            assertEqual({ authorization: { access_token: "bearer token" } }, response)
           })
         })
       }})

@@ -85,7 +85,7 @@ jstest.describe("request", function() { with(this) {
       expect(req, "write").exactly(0)
 
       expect(req, "end").exactly(1)
-      request("GET", "http://example.com/search", {q: "I was there", n: 20})
+      request("GET", "http://example.com/search", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP GET request with parameters and a query string", function() { with(this) {
@@ -102,7 +102,7 @@ jstest.describe("request", function() { with(this) {
       expect(req, "write").exactly(0)
 
       expect(req, "end").exactly(1)
-      request("GET", "http://example.com/search?hello=world", {q: "I was there", n: 20})
+      request("GET", "http://example.com/search?hello=world", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP DELETE request with parameters", function() { with(this) {
@@ -121,7 +121,7 @@ jstest.describe("request", function() { with(this) {
       expect(req, "write").exactly(0)
 
       expect(req, "end").exactly(1)
-      request("DELETE", "http://example.com/search", {q: "I was there", n: 20})
+      request("DELETE", "http://example.com/search", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP POST request with parameters", function() { with(this) {
@@ -141,7 +141,7 @@ jstest.describe("request", function() { with(this) {
       expect(req, "write").given(buffer("q=I%20was%20there&n=20"))
 
       expect(req, "end").exactly(1)
-      request("POST", "http://example.com/search", {q: "I was there", n: 20})
+      request("POST", "http://example.com/search", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP PUT request with parameters", function() { with(this) {
@@ -161,7 +161,7 @@ jstest.describe("request", function() { with(this) {
       expect(req, "write").given(buffer("q=I%20was%20there&n=20"))
 
       expect(req, "end").exactly(1)
-      request("PUT", "http://example.com/search", {q: "I was there", n: 20})
+      request("PUT", "http://example.com/search", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP PUT request with a body", function() { with(this) {
@@ -201,7 +201,7 @@ jstest.describe("request", function() { with(this) {
       expect(req, "write").given(buffer("I was there"))
 
       expect(req, "end").exactly(1)
-      request("PUT", "http://example.com/search", "I was there", {"content-type": "text/plain"})
+      request("PUT", "http://example.com/search", "I was there", { "content-type": "text/plain" })
     }})
   }})
 
@@ -253,12 +253,12 @@ jstest.describe("request", function() { with(this) {
       before(function(resume) { with(this) {
         var redirect = stubRequest(), target = stubRequest()
 
-        stub(http, "request").given(objectIncluding({host: "example.com"})).returns(redirect)
-        stub(http, "request").given(objectIncluding({host: "google.com"})).returns(target)
+        stub(http, "request").given(objectIncluding({ host: "example.com" })).returns(redirect)
+        stub(http, "request").given(objectIncluding({ host: "google.com" })).returns(target)
 
         doRequest("http://example.com/", resume)
 
-        redirect.emit("response", new Response(302, {"location": "http://google.com/"}, ["You are being redirected"]))
+        redirect.emit("response", new Response(302, { "location": "http://google.com/" }, ["You are being redirected"]))
         target.emit("response", new Response(201, {}, ["Google.com"]))
       }})
 
@@ -271,12 +271,12 @@ jstest.describe("request", function() { with(this) {
       before(function(resume) { with(this) {
         var redirect = stubRequest(), target = stubRequest()
 
-        stub(http, "request").given(objectIncluding({path: "/users/jcoglan"})).returns(redirect)
-        stub(http, "request").given(objectIncluding({path: "/about"})).returns(target)
+        stub(http, "request").given(objectIncluding({ path: "/users/jcoglan" })).returns(redirect)
+        stub(http, "request").given(objectIncluding({ path: "/about" })).returns(target)
 
         doRequest("http://example.com/users/jcoglan", resume)
 
-        redirect.emit("response", new Response(302, {"location": "/about"}, ["You are being redirected"]))
+        redirect.emit("response", new Response(302, { "location": "/about" }, ["You are being redirected"]))
         target.emit("response", new Response(201, {}, ["About"]))
       }})
 
@@ -289,12 +289,12 @@ jstest.describe("request", function() { with(this) {
       before(function(resume) { with(this) {
         var redirect = stubRequest(), target = stubRequest()
 
-        stub(http, "request").given(objectIncluding({path: "/users/jcoglan"})).returns(redirect)
-        stub(http, "request").given(objectIncluding({path: "/users/about"})).returns(target)
+        stub(http, "request").given(objectIncluding({ path: "/users/jcoglan" })).returns(redirect)
+        stub(http, "request").given(objectIncluding({ path: "/users/about" })).returns(target)
 
         doRequest("http://example.com/users/jcoglan", resume)
 
-        redirect.emit("response", new Response(302, {"location": "about"}, ["You are being redirected"]))
+        redirect.emit("response", new Response(302, { "location": "about" }, ["You are being redirected"]))
         target.emit("response", new Response(201, {}, ["About"]))
       }})
 

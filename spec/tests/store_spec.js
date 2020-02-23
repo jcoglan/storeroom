@@ -27,19 +27,19 @@ jstest.describe("store", function() { with(this) {
   }})
 
   it("stores and retrieves a document", function(resume) { with(this) {
-    store.put("/foo", {hello: "world"}).then(function() {
+    store.put("/foo", { hello: "world" }).then(function() {
       return store.get("/foo")
     }).then(function(result) {
-      resume(function() { assertEqual({hello: "world"}, result) })
+      resume(function() { assertEqual({ hello: "world" }, result) })
     })
   }})
 
   it("retrieves a document when instantiated with master keys in place", function(resume) { with(this) {
-    store.put("/foo", {hello: "world"}).then(function() {
+    store.put("/foo", { hello: "world" }).then(function() {
       store = createStore()
       return store.get("/foo")
     }).then(function(result) {
-      resume(function() { assertEqual({hello: "world"}, result) })
+      resume(function() { assertEqual({ hello: "world" }, result) })
     })
   }})
 
@@ -48,19 +48,19 @@ jstest.describe("store", function() { with(this) {
     stub(MasterKeys.prototype, "hashPathname").returns("0")
 
     Promise.all([
-      store.put("/foo", {a: 1}),
-      store.put("/bar", {b: 2})
+      store.put("/foo", { a: 1 }),
+      store.put("/bar", { b: 2 })
     ]).then(function() {
       return Promise.all(["/foo", "/bar"].map(store.get, store))
     }).then(function(results) {
-      resume(function() { assertEqual([{a: 1}, {b: 2}], results) })
+      resume(function() { assertEqual([{ a: 1 }, { b: 2 }], results) })
     })
   }})
 
   it("stores a document as a child of its parent directory", function(resume) { with(this) {
     Promise.all([
-      store.put("/foo", {a: 1}),
-      store.put("/bar/qux", {b: 2})
+      store.put("/foo", { a: 1 }),
+      store.put("/bar/qux", { b: 2 })
     ]).then(function() {
       return Promise.all(["/", "/bar/"].map(store.entries, store))
     }).then(function(results) {
@@ -70,8 +70,8 @@ jstest.describe("store", function() { with(this) {
 
   it("does not store directory files more than once", function(resume) { with(this) {
     Promise.all([
-      store.put("/bar/foo", {a: 1}),
-      store.put("/bar/qux", {b: 2})
+      store.put("/bar/foo", { a: 1 }),
+      store.put("/bar/qux", { b: 2 })
     ]).then(function() {
       return store.entries("/")
     }).then(function(entries) {
@@ -80,7 +80,7 @@ jstest.describe("store", function() { with(this) {
   }})
 
   it("stores entries for nested directories", function(resume) { with(this) {
-    store.put("/a/nested/directory/foo", {a: 1}).then(function() {
+    store.put("/a/nested/directory/foo", { a: 1 }).then(function() {
       return Promise.all(
         ["/", "/a/", "/a/nested/", "/a/nested/directory/"].map(store.entries, store)
       )
@@ -93,10 +93,10 @@ jstest.describe("store", function() { with(this) {
 
   it("finds entries for a directory recursively", function(resume) { with(this) {
     Promise.all([
-      store.put("/foo/a", {a: 1}),
-      store.put("/foo/b", {b: 2}),
-      store.put("/foo/a/c", {c: 3}),
-      store.put("/bar/a", {a: 1})
+      store.put("/foo/a", { a: 1 }),
+      store.put("/foo/b", { b: 2 }),
+      store.put("/foo/a/c", { c: 3 }),
+      store.put("/bar/a", { a: 1 })
     ]).then(function() {
       return store.findRecursive("/foo/")
     }).then(function(entries) {
@@ -105,7 +105,7 @@ jstest.describe("store", function() { with(this) {
   }})
 
   it("deletes a document", function(resume) { with(this) {
-    store.put("/foo", {hello: "world"}).then(function() {
+    store.put("/foo", { hello: "world" }).then(function() {
       return store.remove("/foo")
     }).then(function() {
       return store.get("/foo")
@@ -115,7 +115,7 @@ jstest.describe("store", function() { with(this) {
   }})
 
   it("deletes a directory entry", function(resume) { with(this) {
-    store.put("/foo", {hello: "world"}).then(function() {
+    store.put("/foo", { hello: "world" }).then(function() {
       return store.remove("/foo")
     }).then(function() {
       return store.entries("/")
@@ -125,7 +125,7 @@ jstest.describe("store", function() { with(this) {
   }})
 
   it("deletes empty ancestor directories", function(resume) { with(this) {
-    store.put("/a/nested/directory/foo", {a: 1}).then(function() {
+    store.put("/a/nested/directory/foo", { a: 1 }).then(function() {
       return store.remove("/a/nested/directory/foo")
     }).then(function() {
       return Promise.all(
@@ -138,8 +138,8 @@ jstest.describe("store", function() { with(this) {
 
   it("does not delete non-empty ancestor directories", function(resume) { with(this) {
     Promise.all([
-      store.put("/a/nested/directory/foo", {a: 1}),
-      store.put("/a/bar", {b: 2})
+      store.put("/a/nested/directory/foo", { a: 1 }),
+      store.put("/a/bar", { b: 2 })
     ]).then(function() {
       return store.remove("/a/nested/directory/foo")
     }).then(function() {
@@ -153,9 +153,9 @@ jstest.describe("store", function() { with(this) {
 
   it("removes a directory recursively", function(resume) { with(this) {
     Promise.all([
-      store.put("/foo/a/nested/doc", {a: 1}),
-      store.put("/foo/b", {b: 2}),
-      store.put("/bar/c", {c: 3})
+      store.put("/foo/a/nested/doc", { a: 1 }),
+      store.put("/foo/b", { b: 2 }),
+      store.put("/bar/c", { c: 3 })
     ]).then(function() {
       return store.removeRecursive("/foo/")
     }).then(function() {

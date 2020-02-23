@@ -16,7 +16,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
 
   before(function() { with(this) {
     this.adapter = storeroom.createDropboxAdapter({
-      authorization: {access_token: "deadbeef"}
+      authorization: { access_token: "deadbeef" }
     })
   }})
 
@@ -25,7 +25,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       expect(http, "post").given("https://content.dropboxapi.com/2/files/download", {}, {
         "Authorization":   "Bearer deadbeef",
         "Content-Type":    " ",
-        "Dropbox-API-Arg": jsonIncluding({path: "/a-file"})
+        "Dropbox-API-Arg": jsonIncluding({ path: "/a-file" })
       }).returning(Promise.resolve({}))
 
       adapter.read("a-file").catch(function() { resume() })
@@ -35,7 +35,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status:  200,
-          headers: {"dropbox-api-result": "{}"},
+          headers: { "dropbox-api-result": "{}" },
           body:    "the file contents"
         }))
       }})
@@ -51,7 +51,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status:  401,
-          headers: {"dropbox-api-result": "{}"},
+          headers: { "dropbox-api-result": "{}" },
           body:    "Bad access token"
         }))
       }})
@@ -70,8 +70,8 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status:  409,
-          headers: {"dropbox-api-result": "{}"},
-          body:    '{"error": {"path": {".tag": "not_found"}}}'
+          headers: { "dropbox-api-result": "{}" },
+          body:    '{ "error": { "path": { ".tag": "not_found" } } }'
         }))
       }})
 
@@ -86,15 +86,15 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status:  409,
-          headers: {"dropbox-api-result": "{}"},
-          body:    '{"error": "Server error"}'
+          headers: { "dropbox-api-result": "{}" },
+          body:    '{ "error": "Server error" }'
         }))
       }})
 
       it("throws the error", function(resume) { with(this) {
         adapter.read("a-file").catch(function(error) {
           resume(function() {
-            assertEqual( 'Dropbox error (409): {"error": "Server error"}', error.message )
+            assertEqual( 'Dropbox error (409): { "error": "Server error" }', error.message )
           })
         })
       }})
@@ -109,7 +109,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
           "the file contents", {
             "Authorization":   "Bearer deadbeef",
             "Content-Type":    "application/octet-stream",
-            "Dropbox-API-Arg": jsonIncluding({path: "/a-file", mode: "add", autorename: false, mute: true})
+            "Dropbox-API-Arg": jsonIncluding({ path: "/a-file", mode: "add", autorename: false, mute: true })
           }).returning(Promise.resolve({}))
 
         adapter.write("a-file", "the file contents").catch(function() { resume() })
@@ -119,10 +119,10 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     describe("after adding the file", function() { with(this) {
       before(function(resume) { with(this) {
         stub(http, "post").given(match(/\/upload$/), anything(), objectIncluding({
-          "Dropbox-API-Arg": jsonIncluding({mode: "add"})
+          "Dropbox-API-Arg": jsonIncluding({ mode: "add" })
         })).returns(Promise.resolve({
           status: 200,
-          body:   '{"rev": "789xyz"}'
+          body:   '{ "rev": "789xyz" }'
         }))
 
         adapter.write("a-file", "the file contents").then(function() { resume() })
@@ -134,7 +134,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
           "the file contents", {
             "Authorization":   "Bearer deadbeef",
             "Content-Type":    "application/octet-stream",
-            "Dropbox-API-Arg": jsonIncluding({path: "/a-file", mode: {".tag": "update", update: "789xyz"}})
+            "Dropbox-API-Arg": jsonIncluding({ path: "/a-file", mode: { ".tag": "update", update: "789xyz" } })
           }).returning(Promise.resolve({}))
 
         adapter.write("a-file", "the file contents").catch(function() { resume() })
@@ -146,7 +146,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
         stub(http, "post").given(match(/\/download$/), anyArgs())
           .returns(Promise.resolve({
             status:  200,
-            headers: {"dropbox-api-result": '{"rev": "123abc"}'},
+            headers: { "dropbox-api-result": '{ "rev": "123abc" }' },
             body:    "the file contents"
           }))
 
@@ -159,7 +159,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
           "the file contents", {
             "Authorization":   "Bearer deadbeef",
             "Content-Type":    "application/octet-stream",
-            "Dropbox-API-Arg": jsonIncluding({path: "/a-file", mode: {".tag": "update", update: "123abc"}})
+            "Dropbox-API-Arg": jsonIncluding({ path: "/a-file", mode: { ".tag": "update", update: "123abc" } })
           }).returning(Promise.resolve({}))
 
         adapter.write("a-file", "the file contents").catch(function() { resume() })
@@ -170,7 +170,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status: 200,
-          body:   '{"rev": "789xyz"}'
+          body:   '{ "rev": "789xyz" }'
         }))
       }})
 
@@ -203,7 +203,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status: 409,
-          body:   '{"error": {"reason": {".tag": "conflict"}}}'
+          body:   '{ "error": { "reason": { ".tag": "conflict" } } }'
         }))
       }})
 
@@ -211,7 +211,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
         adapter.write("a-file", "the file contents").catch(function(error) {
           resume(function() {
             assertKindOf( errors.ConflictError, error )
-            assertEqual( 'Dropbox error: {"error": {"reason": {".tag": "conflict"}}}', error.message )
+            assertEqual( 'Dropbox error: { "error": { "reason": { ".tag": "conflict" } } }', error.message )
           })
         })
       }})
@@ -221,14 +221,14 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status: 409,
-          body:   '{"error": "Server error"}'
+          body:   '{ "error": "Server error" }'
         }))
       }})
 
       it("throws the error", function(resume) { with(this) {
         adapter.write("a-file", "the file contents").catch(function(error) {
           resume(function() {
-            assertEqual( 'Dropbox error (409): {"error": "Server error"}', error.message )
+            assertEqual( 'Dropbox error (409): { "error": "Server error" }', error.message )
           })
         })
       }})
@@ -239,7 +239,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
     it("deletes a file by writing null", function(resume) { with(this) {
       expect(http, "post").given(
         "https://api.dropboxapi.com/2/files/delete",
-        jsonIncluding({path: "/a-file"}), {
+        jsonIncluding({ path: "/a-file" }), {
           "Authorization": "Bearer deadbeef",
           "Content-Type":  "application/json",
         }).returning(Promise.resolve({}))
@@ -252,19 +252,19 @@ jstest.describe("DropboxAdapter", function() { with(this) {
         stub(http, "post").given(match(/\/download$/), anyArgs())
           .returns(Promise.resolve({
             status:  200,
-            headers: {"dropbox-api-result": '{"rev": "123abc"}'},
+            headers: { "dropbox-api-result": '{ "rev": "123abc" }' },
             body:    "the file contents"
           }))
 
         stub(http, "post").given(match(/\/delete$/), anyArgs())
-          .returns(Promise.resolve({status: 200, body: "{}"}))
+          .returns(Promise.resolve({ status: 200, body: "{}" }))
 
         adapter.read("a-file").then(function() { resume() })
       }})
 
       it("removes the file's etag from memory", function(resume) { with(this) {
         expect(http, "post").given(match(/\/upload$/), "the new contents", objectIncluding({
-          "Dropbox-API-Arg": jsonIncluding({path: "/a-file", mode: "add"})
+          "Dropbox-API-Arg": jsonIncluding({ path: "/a-file", mode: "add" })
         })).returning(Promise.resolve({}))
 
         adapter.write("a-file", null).then(function() {
@@ -283,7 +283,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
 
     describe("when the request is unauthorized", function() { with(this) {
       before(function() { with(this) {
-        stub(http, "post").returns(Promise.resolve({status: 401, body: "{}"}))
+        stub(http, "post").returns(Promise.resolve({ status: 401, body: "{}" }))
       }})
 
       it("throws an AuthError", function(resume) { with(this) {
@@ -300,7 +300,7 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status: 409,
-          body:   '{"error": {"path_lookup": {".tag": "not_found"}}}'
+          body:   '{ "error": { "path_lookup": { ".tag": "not_found" } } }'
         }))
       }})
 
@@ -315,14 +315,14 @@ jstest.describe("DropboxAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "post").returns(Promise.resolve({
           status: 409,
-          body:   '{"error": "Gateway timeout"}'
+          body:   '{ "error": "Gateway timeout" }'
         }))
       }})
 
       it("throws the error", function(resume) { with(this) {
         adapter.write("a-file", null).catch(function(error) {
           resume(function() {
-            assertEqual( 'Dropbox error (409): {"error": "Gateway timeout"}', error.message )
+            assertEqual( 'Dropbox error (409): { "error": "Gateway timeout" }', error.message )
           })
         })
       }})

@@ -7,7 +7,7 @@ With valid parameters:
     curl -siX POST https://content.dropboxapi.com/2/files/upload \
         -H 'Authorization: Bearer [REDACTED]' \
         -H 'Content-Type: application/octet-stream' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt", "mode": "add"}' \
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt", "mode": "add" }' \
         -d 'Hello world'
 
     HTTP/1.1 200 OK
@@ -28,7 +28,7 @@ Auth error:
 
     curl -siX POST https://content.dropboxapi.com/2/files/upload \
         -H 'Content-Type: application/octet-stream' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt", "mode": "add"}' \
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt", "mode": "add" }' \
         -d 'Hello world'
 
     HTTP/1.1 400 Bad Request
@@ -40,7 +40,7 @@ Auth error:
     curl -siX POST https://content.dropboxapi.com/2/files/upload \
         -H 'Authorization: Bearer [REDACTED]' \
         -H 'Content-Type: application/octet-stream' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt", "mode": "add"}' \
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt", "mode": "add" }' \
         -d 'Hello world'
 
     HTTP/1.1 401 invalid_access_token/...
@@ -58,7 +58,7 @@ No content type:
 
     curl -siX POST https://content.dropboxapi.com/2/files/upload \
         -H 'Authorization: Bearer [REDACTED]' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt", "mode": "add"}' \
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt", "mode": "add" }' \
         -d 'Hello world'
 
     HTTP/1.1 400 Bad Request
@@ -73,7 +73,7 @@ Wrong mode:
     curl -siX POST https://content.dropboxapi.com/2/files/upload \
         -H 'Authorization: Bearer [REDACTED]' \
         -H 'Content-Type: application/octet-stream' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt", "mode": "update"}' \
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt", "mode": "update" }' \
         -d 'Hello world'
 
     HTTP/1.1 400 Bad Request
@@ -90,7 +90,7 @@ With valid parameters:
     curl -siX POST https://content.dropboxapi.com/2/files/upload \
         -H 'Authorization: Bearer [REDACTED]' \
         -H 'Content-Type: application/octet-stream' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt", "mode": {".tag": "update", "update": "c4bd4dafc"}}' \
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt", "mode": { ".tag": "update", "update": "c4bd4dafc" } }' \
         -d 'Hello again'
 
     HTTP/1.1 200 OK
@@ -112,7 +112,7 @@ Wrong mode:
     curl -siX POST https://content.dropboxapi.com/2/files/upload \
         -H 'Authorization: Bearer [REDACTED]' \
         -H 'Content-Type: application/octet-stream' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt", "mode": "add"}' \
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt", "mode": "add" }' \
         -d 'Hello again'
 
     HTTP/1.1 409 path/conflict/file/
@@ -137,7 +137,7 @@ Wrong version:
     curl -siX POST https://content.dropboxapi.com/2/files/upload \
         -H 'Authorization: Bearer [REDACTED]' \
         -H 'Content-Type: application/octet-stream' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt", "mode": {".tag": "update", "update": "deadbeef5"}}' \
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt", "mode": { ".tag": "update", "update": "deadbeef5" } }' \
         -d 'Hello again'
 
     HTTP/1.1 409 path/conflict/file/.
@@ -164,7 +164,7 @@ With valid parameters:
 
     curl -siX POST https://content.dropboxapi.com/2/files/download \
         -H 'Authorization: Bearer [REDACTED]' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt"}'
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt" }'
 
     HTTP/1.1 200 OK
     Content-Type: application/octet-stream
@@ -188,7 +188,7 @@ Auth error:
 
     curl -siX POST https://content.dropboxapi.com/2/files/download \
         -H 'Authorization: Bearer [REDACTED]' \
-        -H 'Dropbox-API-Arg: {"path": "/hello.txt"}'
+        -H 'Dropbox-API-Arg: { "path": "/hello.txt" }'
 
     HTTP/1.1 401 invalid_access_token/.
     Content-Type: application/json
@@ -205,7 +205,7 @@ Missing file:
 
     curl -siX POST https://content.dropboxapi.com/2/files/download \
         -H 'Authorization: Bearer [REDACTED]' \
-        -H 'Dropbox-API-Arg: {"path": "hello.txt"}'
+        -H 'Dropbox-API-Arg: { "path": "hello.txt" }'
 
     HTTP/1.1 400 Bad Request
     Content-Type: text/plain; charset=utf-8
@@ -216,7 +216,7 @@ Missing file:
 
     curl -siX POST https://content.dropboxapi.com/2/files/download \
         -H 'Authorization: Bearer [REDACTED]' \
-        -H 'Dropbox-API-Arg: {"path": "/missing.txt"}'
+        -H 'Dropbox-API-Arg: { "path": "/missing.txt" }'
 
     HTTP/1.1 409 path/not_found/.
     Content-Type: application/json
@@ -235,7 +235,7 @@ Bad args:
 
     curl -siX POST https://content.dropboxapi.com/2/files/download \
         -H 'Authorization: Bearer [REDACTED]' \
-        -H 'Dropbox-API-Arg: {"pat": "/hello.txt"}'
+        -H 'Dropbox-API-Arg: { "pat": "/hello.txt" }'
 
     HTTP/1.1 400 Bad Request
     Content-Type: text/plain; charset=utf-8
@@ -260,7 +260,7 @@ With valid parameters:
     curl -siX POST https://api.dropboxapi.com/2/files/delete \
         -H 'Authorization: Bearer [REDACTED]' \
         -H 'Content-Type: application/json' \
-        -d '{"path": "/hello.txt"}'
+        -d '{ "path": "/hello.txt" }'
 
     HTTP/1.1 200 OK
     Content-Type: application/json
@@ -287,7 +287,7 @@ Missing file:
     curl -siX POST https://api.dropboxapi.com/2/files/delete \
         -H 'Authorization: Bearer [REDACTED]' \
         -H 'Content-Type: application/json' \
-        -d '{"path": "/hello.txt"}'
+        -d '{ "path": "/hello.txt" }'
 
     HTTP/1.1 409 Conflict
     Content-Type: application/json
@@ -308,7 +308,7 @@ Auth error:
     curl -siX POST https://api.dropboxapi.com/2/files/delete \
         -H 'Authorization: Bearer [REDACTED]' \
         -H 'Content-Type: application/json' \
-        -d '{"path": "/hello.txt"}'
+        -d '{ "path": "/hello.txt" }'
 
     HTTP/1.1 401 Unauthorized
     Content-Type: application/json
@@ -326,7 +326,7 @@ Missing content type:
 
     curl -siX POST https://api.dropboxapi.com/2/files/delete \
         -H 'Authorization: Bearer [REDACTED]' \
-        -d '{"path": "/hello.txt"}'
+        -d '{ "path": "/hello.txt" }'
 
     HTTP/1.1 400 Bad Request
     Content-Type: text/plain; charset=utf-8

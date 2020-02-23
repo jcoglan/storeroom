@@ -6,7 +6,7 @@ var discover = require("../../../../lib/adapters/remote_storage/discover"),
 
 jstest.describe("RemoteStorage discovery", function() { with(this) {
   before(function() { with(this) {
-    stub(http, "get").returns(Promise.resolve({status: 404}))
+    stub(http, "get").returns(Promise.resolve({ status: 404 }))
   }})
 
   this.define("stubGet", function(url, params, response) {
@@ -29,7 +29,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with a non-200 status", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/webfinger", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/webfinger", { resource: "acct:bob@example.com" }, [
         201,
         {},
         {
@@ -54,7 +54,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with an unknown rel value", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/webfinger", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/webfinger", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {
@@ -79,7 +79,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with an unrecognised version key", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/webfinger", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/webfinger", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {
@@ -104,7 +104,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with an unrecognised auth key", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/webfinger", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/webfinger", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {
@@ -130,7 +130,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with an unrecognised storage key", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/webfinger", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/webfinger", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {
@@ -155,7 +155,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with version draft-dejong-05", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/webfinger", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/webfinger", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {
@@ -186,7 +186,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with version draft-dejong-02", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/webfinger", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/webfinger", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {
@@ -217,7 +217,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with version draft-dejong-01", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/webfinger", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/webfinger", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {
@@ -248,7 +248,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with version draft-dejong-00", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/webfinger", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/webfinger", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {
@@ -280,7 +280,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with version 2012.04", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/host-meta.json", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/host-meta.json", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {
@@ -312,7 +312,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
 
   describe("with version 2011.10", function() { with(this) {
     before(function() { with(this) {
-      stubGet("https://example.com/.well-known/host-meta.json", {resource: "acct:bob@example.com"}, [
+      stubGet("https://example.com/.well-known/host-meta.json", { resource: "acct:bob@example.com" }, [
         200,
         {},
         {

@@ -14,7 +14,7 @@ jstest.describe("request", function() { with(this) {
   })
 
   this.define("stubRequest", function() {
-    return {open: function() {}, send: function() {}}
+    return { open: function() {}, send: function() {} }
   })
 
   before(function() { with(this) {
@@ -48,21 +48,21 @@ jstest.describe("request", function() { with(this) {
       expect(req, "open").given("GET", "http://example.com/search?q=I%20was%20there&n=20", true)
       expect(req, "send").given("")
 
-      request("GET", "http://example.com/search", {q: "I was there", n: 20})
+      request("GET", "http://example.com/search", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP GET request with parameters and a query string", function() { with(this) {
       expect(req, "open").given("GET", "http://example.com/search?hello=world&q=I%20was%20there&n=20", true)
       expect(req, "send").given("")
 
-      request("GET", "http://example.com/search?hello=world", {q: "I was there", n: 20})
+      request("GET", "http://example.com/search?hello=world", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP DELETE request with parameters", function() { with(this) {
       expect(req, "open").given("DELETE", "http://example.com/search?q=I%20was%20there&n=20", true)
       expect(req, "send").given("")
 
-      request("DELETE", "http://example.com/search", {q: "I was there", n: 20})
+      request("DELETE", "http://example.com/search", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP POST request with parameters", function() { with(this) {
@@ -70,7 +70,7 @@ jstest.describe("request", function() { with(this) {
       expect(req, "setRequestHeader").given("Content-Type", "application/x-www-form-urlencoded")
       expect(req, "send").given("q=I%20was%20there&n=20")
 
-      request("POST", "http://example.com/search", {q: "I was there", n: 20})
+      request("POST", "http://example.com/search", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP PUT request with parameters", function() { with(this) {
@@ -78,7 +78,7 @@ jstest.describe("request", function() { with(this) {
       expect(req, "setRequestHeader").given("Content-Type", "application/x-www-form-urlencoded")
       expect(req, "send").given("q=I%20was%20there&n=20")
 
-      request("PUT", "http://example.com/search", {q: "I was there", n: 20})
+      request("PUT", "http://example.com/search", { q: "I was there", n: 20 })
     }})
 
     it("makes an HTTP PUT request with a body", function() { with(this) {
@@ -94,7 +94,7 @@ jstest.describe("request", function() { with(this) {
       expect(req, "setRequestHeader").given("Content-Type", "text/plain")
       expect(req, "send").given("I was there")
 
-      request("PUT", "http://example.com/search", "I was there", {"Content-Type": "text/plain"})
+      request("PUT", "http://example.com/search", "I was there", { "Content-Type": "text/plain" })
     }})
   }})
 

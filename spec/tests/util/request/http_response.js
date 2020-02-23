@@ -20,7 +20,7 @@ jstest.describe("responses", function() { with(this) {
     }})
 
     describe("with a response body", function() { with(this) {
-      this.define("headers", {"content-type": "application/json"})
+      this.define("headers", { "content-type": "application/json" })
       this.define("body",    ['{"st', 'atus', '":"ok"', '}'])
 
       it("returns the content-type", function() { with(this) {

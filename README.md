@@ -60,7 +60,7 @@ be overwritten.
 It returns a promise containing no value when the data has been written to disk.
 
 ```js
-store.put('/users/alice', {name: 'Alice Smith'});
+store.put('/users/alice', { name: 'Alice Smith' });
 ```
 
 #### `store.remove(String name) -> Promise`
@@ -79,7 +79,7 @@ promise that will yield a copy of the object that was saved using `put()`.
 
 ```js
 store.get('/users/alice').then(function(value) {
-  // value == {name: 'Alice Smith'}
+  // value == { name: 'Alice Smith' }
 });
 ```
 
@@ -279,9 +279,9 @@ var store = storeroom.createStore({
   adapter:  storeroom.createFileAdapter('store')
 });
 
-store.put('/users/alice', {name: 'Alice Smith'});
+store.put('/users/alice', { name: 'Alice Smith' });
 
-store.put('/users/bob', {name: 'Bob Jones'});
+store.put('/users/bob', { name: 'Bob Jones' });
 ```
 
 The first thing that Storeroom does when you save a value is it checks whether a
@@ -330,7 +330,7 @@ multiple lines, where:
 * Each remaining lines (the *items*) are the encrypted values, ordered to
   correspond with the names in the index
 
-For example, here's how the item `/users/alice -> {name: 'Alice Smith'}` is
+For example, here's how the item `/users/alice -> { name: 'Alice Smith' }` is
 written into a file. The name `/users/alice` is added to the index on the second
 line, and then the JSON encoding of the value is added to the items in the
 corresponding position. If the file is empty initially this leaves a single item

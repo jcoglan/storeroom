@@ -13,7 +13,7 @@ jstest.describe("RemoteStorage Node authorization", function() { with(this) {
     }
     stub(discover, "withAddress").returns(Promise.resolve(discoverResponse))
 
-    this.oauthResponse = {access_token: "deadbeef"}
+    this.oauthResponse = { access_token: "deadbeef" }
     stub(oauth, "authorize").yields([null, oauthResponse])
 
     this.params = {
