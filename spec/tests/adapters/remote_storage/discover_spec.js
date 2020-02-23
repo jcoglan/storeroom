@@ -17,7 +17,7 @@ jstest.describe("RemoteStorage discovery", function() { with(this) {
     stub.returns(Promise.resolve({
       status:  response[0],
       headers: response[1],
-      body:    new Buffer(JSON.stringify(response[2]))
+      body:    Buffer.from(JSON.stringify(response[2]))
     }))
   })
 

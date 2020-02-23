@@ -34,7 +34,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "get").returns(Promise.resolve({
           status: 200,
-          body:   new Buffer("the file contents")
+          body:   Buffer.from("the file contents")
         }))
       }})
 
@@ -49,7 +49,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "get").returns(Promise.resolve({
           status: 401,
-          body:   new Buffer("Access denied")
+          body:   Buffer.from("Access denied")
         }))
       }})
 
@@ -67,7 +67,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "get").returns(Promise.resolve({
           status: 404,
-          body:   new Buffer("Not found")
+          body:   Buffer.from("Not found")
         }))
       }})
 
@@ -82,7 +82,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "get").returns(Promise.resolve({
           status: 500,
-          body:   new Buffer("Server error")
+          body:   Buffer.from("Server error")
         }))
       }})
 
@@ -110,7 +110,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "put").returns(Promise.resolve({
           status: 200,
-          body:   new Buffer("")
+          body:   Buffer.from("")
         }))
       }})
 
@@ -125,7 +125,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "put").returns(Promise.resolve({
           status: 401,
-          body:   new Buffer("Access denied")
+          body:   Buffer.from("Access denied")
         }))
       }})
 
@@ -143,7 +143,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "put").returns(Promise.resolve({
           status: 412,
-          body:   new Buffer("Version mismatch")
+          body:   Buffer.from("Version mismatch")
         }))
       }})
 
@@ -161,7 +161,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "put").returns(Promise.resolve({
           status: 500,
-          body:   new Buffer("Server error")
+          body:   Buffer.from("Server error")
         }))
       }})
 
@@ -188,7 +188,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "del").returns(Promise.resolve({
           status: 200,
-          body:   new Buffer("")
+          body:   Buffer.from("")
         }))
       }})
 
@@ -203,7 +203,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "del").returns(Promise.resolve({
           status: 404,
-          body:   new Buffer("")
+          body:   Buffer.from("")
         }))
       }})
 
@@ -218,7 +218,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "del").returns(Promise.resolve({
           status: 401,
-          body:   new Buffer("Access denied")
+          body:   Buffer.from("Access denied")
         }))
       }})
 
@@ -236,7 +236,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "del").returns(Promise.resolve({
           status: 409,
-          body:   new Buffer("Version mismatch")
+          body:   Buffer.from("Version mismatch")
         }))
       }})
 
@@ -254,7 +254,7 @@ jstest.describe("RemoteStorageAdapter", function() { with(this) {
       before(function() { with(this) {
         stub(http, "del").returns(Promise.resolve({
           status: 500,
-          body:   new Buffer("Server error")
+          body:   Buffer.from("Server error")
         }))
       }})
 
