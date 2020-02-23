@@ -11,14 +11,14 @@
 , "browser"         : "./lib/browser_index"
 
 , "dependencies"    : { "asap": "*"
-                      , "mkdirp": "*"
+                      , "mkdirp": "< 1.0.0"
                       , "remotestorage-oauth": "*"
                       , "vault-cipher": "~0.4.0"
                       }
 
 , "devDependencies" : { "jquery": "*"
                       , "jstest": "*"
-                      , "rimraf": "*"
+                      , "rimraf": "< 3.0.0"
                       , "webpack": "^2.0.0"
                       }
 
