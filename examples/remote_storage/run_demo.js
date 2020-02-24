@@ -1,9 +1,11 @@
-var storeroom = require('../../'),
-    store     = require('../local_store'),
-    runDemo   = require('../run_demo');
+'use strict';
 
-var run = function(session) {
-  var auth  = session.authorization.access_token,
+const storeroom = require('../../'),
+      store     = require('../local_store'),
+      runDemo   = require('../run_demo');
+
+function run(session) {
+  let auth  = session.authorization.access_token,
       root  = session.webfinger.storageRoot,
       scope = session.scope;
 
@@ -11,7 +13,7 @@ var run = function(session) {
 
   console.log('[session]', session);
 
-  var remoteStorage = storeroom.createStore({
+  let remoteStorage = storeroom.createStore({
     adapter:  storeroom.createRemoteStorageAdapter(session),
     password: 'I was there'
   });

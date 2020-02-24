@@ -1,9 +1,11 @@
-var storeroom = require('../../'),
-    store     = require('../local_store'),
-    runDemo   = require('./run_demo'),
-    $         = require('jquery');
+'use strict';
 
-var credentials = {
+const storeroom = require('../../'),
+      store     = require('../local_store'),
+      runDemo   = require('./run_demo'),
+      $         = require('jquery');
+
+let credentials = {
   client:   'Storeroom Demo',
   scope:    'storeroom',
   callback: location.origin + '/acceptor.html'

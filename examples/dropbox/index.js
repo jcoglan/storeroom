@@ -1,9 +1,11 @@
-var storeroom = require('../../'),
-    store     = require('../local_store'),
-    runDemo   = require('../run_demo'),
-    $         = require('jquery');
+'use strict';
 
-var credentials = {
+const storeroom = require('../../'),
+      store     = require('../local_store'),
+      runDemo   = require('../run_demo'),
+      $         = require('jquery');
+
+let credentials = {
   key:      'j7lwwfemrbo86bf',
   callback: 'http://localhost:8000/acceptor.html'
 };
@@ -30,7 +32,7 @@ $('form.run').submit(function(event) {
   store.get('/sessions/dropbox').then(function(session) {
     console.log('[session]', session);
 
-    var dropbox = storeroom.createStore({
+    let dropbox = storeroom.createStore({
       adapter:  storeroom.createDropboxAdapter(session),
       password: 'I was there'
     });

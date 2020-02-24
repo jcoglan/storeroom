@@ -1,4 +1,6 @@
-var storeroom = require('../../');
+'use strict';
+
+const storeroom = require('../../');
 
 module.exports = storeroom.createStore({
   adapter:  storeroom.createLocalStorageAdapter('prefix'),

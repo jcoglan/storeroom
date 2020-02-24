@@ -1,7 +1,9 @@
-var storeroom = require('../../'),
-    store     = require('../local_store');
+'use strict';
 
-var address = 'jcoglan@5apps.com';
+const storeroom = require('../../'),
+      store     = require('../local_store');
+
+let address = 'jcoglan@5apps.com';
 
 storeroom.connectRemoteStorage({
   address: address,

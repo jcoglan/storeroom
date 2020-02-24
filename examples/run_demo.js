@@ -1,10 +1,12 @@
+'use strict';
+
 module.exports = function(store) {
-  var writes = [
+  let writes = [
     store.put('/users/alice', {name: 'Alice Smith'}),
     store.put('/users/bob', {name: 'Bob Jones'})
   ];
 
-  var records = ['/users/alice', '/users/bob'];
+  let records = ['/users/alice', '/users/bob'];
 
   Promise.all(writes).then(function() {
     return store.entries('/users/');
