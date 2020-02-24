@@ -11,25 +11,25 @@ let credentials = {
   callback: location.origin + '/acceptor.html'
 };
 
-$('form.connect').submit(function(event) {
+$('form.connect').submit((event) => {
   event.preventDefault();
 
   credentials.address = $('#address').val();
 
-  storeroom.connectRemoteStorage(credentials).then(function(session) {
+  storeroom.connectRemoteStorage(credentials).then((session) => {
     console.log(session);
     store.put('/sessions/remote_storage', session);
-  }, function(error) {
+  }, (error) => {
     console.error(error);
   });
 });
 
-$('form.clear').submit(function(event) {
+$('form.clear').submit((event) => {
   event.preventDefault();
   store.remove('/sessions/remote_storage');
 });
 
-$('form.run').submit(function(event) {
+$('form.run').submit((event) => {
   event.preventDefault();
   store.get('/sessions/remote_storage').then(runDemo);
 });

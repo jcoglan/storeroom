@@ -11,9 +11,9 @@ storeroom.connectRemoteStorage({
   scope:   'storeroom',
   options: {browser: 'elinks', inline: true}
 
-}).then(function(session) {
+}).then((session) => {
   store.put('/sessions/remote_storage', session);
 
-}).then(function() {
+}).then(() => {
   setTimeout(process.exit, 1000);
 });

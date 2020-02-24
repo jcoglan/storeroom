@@ -26,4 +26,4 @@ module.exports = run;
 if (require.main === module)
   store.get('/sessions/remote_storage')
       .then(run)
-      .catch(function(e) { console.error(e) });
+      .catch((e) => console.error(e));

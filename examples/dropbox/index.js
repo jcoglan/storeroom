@@ -10,26 +10,26 @@ let credentials = {
   callback: 'http://localhost:8000/acceptor.html'
 };
 
-$('form.connect').submit(function(event) {
+$('form.connect').submit((event) => {
   event.preventDefault();
 
-  storeroom.connectDropbox(credentials).then(function(session) {
+  storeroom.connectDropbox(credentials).then((session) => {
     console.log(session);
     store.put('/sessions/dropbox', session);
-  }, function(error) {
+  }, (error) => {
     console.error(error);
   });
 });
 
-$('form.clear').submit(function(event) {
+$('form.clear').submit((event) => {
   event.preventDefault();
   store.remove('/sessions/dropbox');
 });
 
-$('form.run').submit(function(event) {
+$('form.run').submit((event) => {
   event.preventDefault();
 
-  store.get('/sessions/dropbox').then(function(session) {
+  store.get('/sessions/dropbox').then((session) => {
     console.log('[session]', session);
 
     let dropbox = storeroom.createStore({
