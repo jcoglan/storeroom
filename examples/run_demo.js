@@ -12,7 +12,7 @@ module.exports = (store) => {
     return store.entries('/users/');
 
   }).then((entries) => {
-    return Promise.all(entries.map((u) => store.get('/users/' + u)));
+    return Promise.all(entries.map((u) => store.get(`/users/${u}`)));
 
   }).then((results) => {
     console.log(results);
@@ -22,7 +22,7 @@ module.exports = (store) => {
     return store.entries('/users/');
 
   }).then((entries) => {
-    return Promise.all(entries.map((u) => store.get('/users/' + u)));
+    return Promise.all(entries.map((u) => store.get(`/users/${u}`)));
 
   }).then(
     (m) => console.log(m),

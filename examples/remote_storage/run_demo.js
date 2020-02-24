@@ -9,7 +9,7 @@ function run(session) {
       root  = session.webfinger.storageRoot,
       scope = session.scope;
 
-  console.log('curl -isH "Authorization: Bearer ' + auth + '" ' + root + '/' + scope + '/');
+  console.log(`curl -isH "Authorization: Bearer ${auth}" ${root}/${scope}/`);
 
   console.log('[session]', session);
 
