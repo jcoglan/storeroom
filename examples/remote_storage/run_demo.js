@@ -19,7 +19,7 @@ function run(session) {
   });
 
   runDemo(remoteStorage);
-};
+}
 
 module.exports = run;
 
