@@ -37,10 +37,10 @@ determines which type of backing storage you want to use.
 For example, to create a store backed by the filesystem:
 
 ```js
-var path      = require('path'),
-    storeroom = require('storeroom');
+const path      = require('path'),
+      storeroom = require('storeroom');
 
-var store = storeroom.createStore({
+let store = storeroom.createStore({
   password: 'your super secret password',
   adapter:  storeroom.createFileAdapter(path.join(__dirname, 'secrets'))
 });
@@ -78,7 +78,7 @@ This retrieves an item from the store and returns it in a promise. It returns a
 promise that will yield a copy of the object that was saved using `put()`.
 
 ```js
-store.get('/users/alice').then(function(value) {
+store.get('/users/alice').then((value) => {
   // value == { name: 'Alice Smith' }
 });
 ```
@@ -92,7 +92,7 @@ directories will have names ending in `/`. This method does not search the
 directory recursively.
 
 ```js
-store.entries('/users/').then(function(list) {
+store.entries('/users/').then((list) => {
   // list == ['alice']
 });
 ```
@@ -106,7 +106,7 @@ The filesystem adapter is created by supplying the pathname to a directory in
 which to store the files on disk.
 
 ```js
-var pathname = path.join(__dirname, 'store'),
+let pathname = path.join(__dirname, 'store'),
     adapter  = storeroom.createFileAdapter(pathname);
 ```
 
@@ -118,9 +118,9 @@ to use. This object can be any object with `setItem()`, `getItem()` and
 `removeItem()` methods; the default is `localStorage`.
 
 ```js
-var adapter = storeroom.createLocalStorageAdapter('prefix');
+let adapter = storeroom.createLocalStorageAdapter('prefix');
 
-var adapter = storeroom.createLocalStorageAdapter('prefix', sessionStorage);
+let adapter = storeroom.createLocalStorageAdapter('prefix', sessionStorage);
 ```
 
 #### Dropbox
@@ -130,13 +130,13 @@ obtain by asking the user to connect their Dropbox account to your app. Use this
 method to start the connection process, which opens a new window:
 
 ```js
-var dropbox = storeroom.connectDropbox({
+let dropbox = storeroom.connectDropbox({
   key:      '3hco9uik0qgw0gcw',
   callback: 'https://example.com/callback'
 });
 
-dropbox.then(function(credentials) {
-  var adapter = store.createDropboxAdapter(credentials);
+dropbox.then((credentials) => {
+  let adapter = store.createDropboxAdapter(credentials);
 });
 ```
 
@@ -193,15 +193,15 @@ obtain by asking the user to connect their RemoteStorage account to your app.
 Use this method to start the connection process, which opens a new window:
 
 ```js
-var remote = storeroom.connectRemoteStorage({
+let remote = storeroom.connectRemoteStorage({
   address:  'alice@5apps.com',
   scope:    'storeroom',
   client:   'Storeroom Demo',
   callback: 'https://example.com/callback'
 });
 
-remote.then(function(credentials) {
-  var adapter = store.createRemoteStorageAdapter(credentials);
+remote.then((credentials) => {
+  let adapter = store.createRemoteStorageAdapter(credentials);
 });
 ```
 
@@ -242,22 +242,25 @@ Any object supporting this interface can be passed as the `adapter` option to
 For example, here is a conforming implementation that stores data in memory:
 
 ```js
-var MemoryAdapter = function() {
-  this._contents = Object.create(null);
-};
+class MemoryAdapter {
+  constructor {
+    this._contents = new Map();
+  }
 
-MemoryAdapter.prototype.read = function(name) {
-  return Promise.resolve(this._contents[name] || null);
-};
+  read(name) {
+    let value = this._contents.get(name);
+    return Promise.resolve(value || null);
+  }
 
-MemoryAdapter.prototype.write = function(name, data) {
-  if (data === null)
-    delete this._contents[name];
-  else
-    this._contents[name] = data;
+  write(name, data) {
+    if (data === null)
+      this._contents.delete(name);
+    else
+      this._contents.set(name, data);
 
-  return Promise.resolve();
-};
+    return Promise.resolve();
+  }
+}
 ```
 
 
@@ -272,9 +275,9 @@ All the details of how Storeroom stores your data can be demonstrated by the
 following example that writes two items to the store:
 
 ```js
-var storeroom = require('storeroom');
+const storeroom = require('storeroom');
 
-var store = storeroom.createStore({
+let store = storeroom.createStore({
   password: 'I was there',
   adapter:  storeroom.createFileAdapter('store')
 });
