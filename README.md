@@ -27,7 +27,7 @@ is entirely at your own risk.
     npm install storeroom
 
 
-## Usage
+## Usage
 
 To create a store, you call `storeroom.createStore()` with a password and an
 adapter. The password is used to run all the encryption operations and, once
