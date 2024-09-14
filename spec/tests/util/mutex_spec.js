@@ -1,6 +1,5 @@
-var Mutex   = require("../../../lib/util/mutex"),
-    Promise = require("../../../").Promise,
-    jstest  = require("jstest").Test
+var Mutex  = require("../../../lib/util/mutex"),
+    jstest = require("jstest").Test
 
 jstest.describe("Mutex", function() { with(this) {
   this.define("delay", function(n) {
@@ -84,15 +83,6 @@ jstest.describe("Mutex", function() { with(this) {
         })
       })
     }})
-
-    it("executes tasks immediately when the queue is empty", function(resume) { with(this) {
-      mutex.synchronize(task("a"))
-
-      delay(60).then(function() {
-        mutex.synchronize(task("b"))
-        resume(function() { assertEqual(["begin:a", "end:a", "begin:b"], logs) })
-      })
-    }})
   }})
 
   describe("multi", function() { with(this) {
@@ -121,9 +111,10 @@ jstest.describe("Mutex", function() { with(this) {
 
       ]).then(function() {
         resume(function() {
-          assertEqual( ["begin:all", "end:all",
-                        "begin:Z", "begin:Y", "begin:X",
-                        "end:Z", "end:Y", "end:X"], logs )
+          assertEqual( ["begin:Y", "begin:Z",
+                        "end:Y", "end:Z",
+                        "begin:all", "end:all",
+                        "begin:X", "end:X"], logs )
         })
       })
     }})

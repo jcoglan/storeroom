@@ -10,8 +10,7 @@
 , "main"            : "./lib/node_index"
 , "browser"         : "./lib/browser_index"
 
-, "dependencies"    : { "asap": "*"
-                      , "mkdirp": "< 1.0.0"
+, "dependencies"    : { "mkdirp": "< 1.0.0"
                       , "remotestorage-oauth": "*"
                       , "vault-cipher": "git://github.com/jcoglan/vault-cipher"
                       }

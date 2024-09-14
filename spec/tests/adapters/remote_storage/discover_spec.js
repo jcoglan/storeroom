@@ -1,7 +1,6 @@
 var discover = require("../../../../lib/adapters/remote_storage/discover"),
     http     = require("../../../../lib/util/http"),
     Buffer   = require("../../../../").Buffer,
-    Promise  = require("../../../../").Promise,
     jstest   = require("jstest").Test
 
 jstest.describe("RemoteStorage discovery", function() { with(this) {
