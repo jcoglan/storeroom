@@ -20,9 +20,9 @@ jstest.describe("store", function() { with(this) {
     testStore.clear(resume)
   })
 
-  it("returns undefined for an unknown key", function(resume) { with(this) {
+  it("returns null for an unknown key", function(resume) { with(this) {
     store.get("/nope").then(function(result) {
-      resume(function() { assertEqual(undefined, result) })
+      resume(function() { assertEqual(null, result) })
     })
   }})
 
@@ -110,7 +110,7 @@ jstest.describe("store", function() { with(this) {
     }).then(function() {
       return store.get("/foo")
     }).then(function(result) {
-      resume(function() { assertEqual(undefined, result) })
+      resume(function() { assertEqual(null, result) })
     })
   }})
 
